@@ -41,17 +41,17 @@ import './login.css';
         <div className = "shadow-2xl mx-96 my-6">
             <form onSubmit={handleSubmit}>
 
-                <div class="grid grid-rows-3 place-content-center">
+                <div class="grid gap-5 place-content-center ">
                     
                     <div>
-                        <h1 className="text-2xl my-4">Login</h1>
+                        <h1 className="text-2xl flex justify-center my-4">Login</h1>
                     </div>
-                    <div>
+                    <div className="grid grid-cols-1">
                         <label for="username" className="">Username: </label>
                         <input id = "email" value = {email} type = "email" onChange = {handleText} className="email border-2 border-slate-400 rounded p-1" placeholder="Username/Email" required/>
                     </div>
                     
-                    <div>
+                    <div className="grid grid-cols-1">
                         <label for="password" className ="">Password: </label>
                         <input id = "password" value = {password} type = "password" onChange = {handlePass} className="password border-2 border-slate-400 rounded p-1" placeholder="Passcode" required/>
                     </div>
