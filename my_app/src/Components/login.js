@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import './login.css';
-     const Login = ()=>{
+    const Login = ()=>{
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const handleText =(e) =>{ setEmail(e.target.value); }
@@ -38,14 +38,30 @@ import './login.css';
     }
     return(
         <>
-        <div className = "Container">
-            <h1 className="header">Login</h1>
+        <div className = "shadow-2xl mx-96 my-6">
             <form onSubmit={handleSubmit}>
-                <input id = "email" value = {email} type = "email" onChange = {handleText}className="email" placeholder="Username/Email" required/>
-                <input id = "password" value = {password} type = "password" onChange = {handlePass} className="password" placeholder="Passcode" required/>
-                <input type = "submit" className="button" value = "login"/>
+
+                <div class="grid grid-rows-3 place-content-center">
+                    
+                    <div>
+                        <h1 className="text-2xl my-4">Login</h1>
+                    </div>
+                    <div>
+                        <label for="username" className="">Username: </label>
+                        <input id = "email" value = {email} type = "email" onChange = {handleText} className="email border-2 border-slate-400 rounded p-1" placeholder="Username/Email" required/>
+                    </div>
+                    
+                    <div>
+                        <label for="password" className ="">Password: </label>
+                        <input id = "password" value = {password} type = "password" onChange = {handlePass} className="password border-2 border-slate-400 rounded p-1" placeholder="Passcode" required/>
+                    </div>
+                    <div>
+                        <input type = "submit" className="button rounded bg-blue-500 px-6 py-2" value = "login"/>
+                    </div>
+                    
+                    <button onClick = {()=>navigate("/Register")} className= "linkbtn my-6">Don't have an account. <span>Register here.</span></button>
+                </div>
             </form>
-            <button onClick = {()=>navigate("/Register")} className= "linkbtn">Don't have an account. Register here.</button>
         </div>
 
         </>
