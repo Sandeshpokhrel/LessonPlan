@@ -46,7 +46,7 @@ export const Register = (props) =>{
                     
 
                     <div>
-                        <input type = "submit" className = "border-2 border-slate-400 rounded p-1 " value = "Submit" className="button rounded bg-blue-500 px-6 py-2"/>        
+                        <input type = "submit" value = "Submit" className="button rounded bg-blue-500 px-6 py-2"/>        
                     </div>
                 <button onClick = {()=>navigate("/")} className="linkbtn my-6">Already have an account? Login here.</button>
              </div>
