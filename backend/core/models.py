@@ -10,6 +10,7 @@ class User(AbstractUser):
 #subject
 class Subject(models.Model):
   sub_name = models.CharField(max_length=225)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 #section and year
 class SectionYear(models.Model):
