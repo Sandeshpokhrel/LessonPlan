@@ -7,7 +7,7 @@ from django.db import models
 class User(AbstractUser):
   email = models.EmailField(unique=True)
 
-#subject
+#subjects
 class Subject(models.Model):
   sub_name = models.CharField(max_length=225)
   user = models.ForeignKey(User, on_delete=models.CASCADE)
