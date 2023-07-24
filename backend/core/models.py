@@ -23,6 +23,16 @@ class Plan(models.Model):
   plan_name = models.CharField(max_length=255)
   section_year = models.ForeignKey(SectionYear, on_delete=models.CASCADE)
 
+#test
+class Test(models.Model):
+  test_detail = models.CharField(max_length=255)
+  plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+
+#activity
+class Activity(models.Model):
+  activity_detail = models.CharField(max_length=255)
+  plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+
 #chapter
 class Chapter(models.Model):
   chapter_name = models.CharField(max_length=255)
