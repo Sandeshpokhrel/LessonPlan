@@ -10,7 +10,7 @@ export const Header = () => {
           <div>
             <div class="flex items-center">
               <img
-                src="/static/images/TUlogo.png"
+                src="./icons/TUlogo.png"
                 alt="Couldnot load image"
                 class=""
               />
