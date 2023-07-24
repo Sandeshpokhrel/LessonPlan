@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
-import { Header } from './Components/Header/components/Header';
+import { Header } from "./Header/Header";
 import './login.css';
     const Login = ()=>{
     const [email, setEmail] = useState('');
