@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
+import { Header } from './Components/Header/components/Header';
 import './login.css';
     const Login = ()=>{
     const [email, setEmail] = useState('');
@@ -38,6 +39,7 @@ import './login.css';
     }
     return(
         <>
+        <Header/>
         <div className = "shadow-2xl mx-96 my-6">
             <form onSubmit={handleSubmit}>
 
