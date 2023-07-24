@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import { Header } from "../Header/Header";
 export const Register = (props) =>{
     const [text, setText] = useState('');
     const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ export const Register = (props) =>{
     let navigate = useNavigate();
     return (
         <>
+        <Header/>
         <div className="shadow-2xl mx-96 my-6">
         <form onSubmit={handleSubmit}>
                 <div class="grid gap-4 place-content-center ">
