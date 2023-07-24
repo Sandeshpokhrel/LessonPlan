@@ -7,6 +7,9 @@ from django.db.models import F
 
 # Register your models here.
 
+admin.site.site_header = 'Lesson Plan Management'
+admin.site.index_title = 'Admin'
+
 #user
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
@@ -66,7 +69,7 @@ class SectionYearAdmin(admin.ModelAdmin):
 class PlanAdmin(admin.ModelAdmin):
     list_display = ['plan_name', 'activity_count']
     search_fields = ['plan_name']
-    autocomplete_fields = ['sectionyear']
+    autocomplete_fields = ['sectionyear', 'chapter']
     
     def activity_count(self, plan):
         url = reverse('admin:core_activity_changelist') + '?' + urlencode({'plan__id': str(plan.id)})
@@ -86,12 +89,16 @@ class PlanAdmin(admin.ModelAdmin):
 @admin.register(models.Activity)
 class ActivityAdmin(admin.ModelAdmin):
     list_display = ['activity_detail']
+    search_fields = ['activity_detail']
+    autocomplete_fields = ['plan']
 
 
 #test
 @admin.register(models.Test)
 class TestAdmin(admin.ModelAdmin):
     list_display = ['test_detail']
+    search_fields = ['test_detail']
+    autocomplete_fields = ['plan']
 
 
 #chapter
@@ -99,6 +106,7 @@ class TestAdmin(admin.ModelAdmin):
 class ChapterAdmin(admin.ModelAdmin):
     list_display = ['chapter_name', 'assignment_count', 'resource_count']
     search_fields = ['chapter_name']
+    autocomplete_fields = ['section_year']
     
     def assignment_count(self, chapter):
         url = reverse('admin:core_assignment_changelist') + '?' + urlencode({'chapter__id': str(chapter.id)})
@@ -118,10 +126,14 @@ class ChapterAdmin(admin.ModelAdmin):
 @admin.register(models.Assignment)
 class AssignmentAdmin(admin.ModelAdmin):
     list_display = ['assign_name', 'updated_date']
+    search_fields = ['assign_name']
+    autocomplete_fields = ['chapter']
 
 
 #resource
 @admin.register(models.Resource)
 class ResourceAdmin(admin.ModelAdmin):
     list_display = ['res_name', 'updated_date']
+    search_fields = ['res_name']
+    autocomplete_fields = ['chapter']
 
