@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
-
+import image from './components/icons/TUlogo.png'
 export const Header = () => {
   return (
     <>
@@ -10,7 +10,7 @@ export const Header = () => {
           <div>
             <div class="flex items-center">
               <img
-                src="./icons/TUlogo.png"
+                src={image}
                 alt="Couldnot load image"
                 class=""
               />
