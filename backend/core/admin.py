@@ -125,7 +125,7 @@ class AssignmentAdmin(admin.ModelAdmin):
 #assignment
 @admin.register(models.Assignment)
 class AssignmentAdmin(admin.ModelAdmin):
-    list_display = ['assign_name', 'updated_date']
+    list_display = ['assign_name', 'updated_date', 'file']
     search_fields = ['assign_name']
     autocomplete_fields = ['chapter']
 
@@ -133,7 +133,7 @@ class AssignmentAdmin(admin.ModelAdmin):
 #resource
 @admin.register(models.Resource)
 class ResourceAdmin(admin.ModelAdmin):
-    list_display = ['res_name', 'updated_date']
+    list_display = ['res_name', 'updated_date', 'file']
     search_fields = ['res_name']
     autocomplete_fields = ['chapter']
 
