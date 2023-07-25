@@ -70,28 +70,18 @@ class Activity(models.Model):
 class Assignment(models.Model):
   assign_name = models.CharField(max_length=255)
   updated_date = models.DateField(auto_now=True)
+  file = models.FileField(upload_to='core/assignment/files')
   chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
 
   def __str__(self) -> str:
     return self.assign_name
 
-#assignment file
-class AssignmentFile(models.Model):
-  assignment = models.OneToOneField(Assignment, on_delete=models.CASCADE, 
-                               related_name='files')
-  file = models.FileField(upload_to='core/assignment/files')
-
 #resource
 class Resource(models.Model):
   res_name = models.CharField(max_length=255)
   updated_date = models.DateField(auto_now=True)
+  file = models.FileField(upload_to='core/resource/files')
   chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
 
   def __str__(self) -> str:
     return self.res_name
-
-#resource file
-class ResourceFile(models.Model):
-  resource = models.OneToOneField(Resource, on_delete=models.CASCADE, 
-                               related_name='files')
-  file = models.FileField(upload_to='core/resource/files')
