@@ -32,6 +32,14 @@ class Chapter(models.Model):
 
   def __str__(self) -> str:
     return self.chapter_name
+  
+  #topic
+class Topic(models.Model):
+  topic_name = models.CharField(max_length=255)
+  chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+
+  def __str__(self) -> str:
+    return self.topic_name
 
 #plan
 class Plan(models.Model):
