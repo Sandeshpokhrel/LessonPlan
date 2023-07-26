@@ -5,8 +5,7 @@ from django.db import models
 
 #user
 class User(AbstractUser):
-  email = models.EmailField(unique=True)
-
+  pass
 #subject
 class Subject(models.Model):
   sub_name = models.CharField(max_length=225)
