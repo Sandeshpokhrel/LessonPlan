@@ -12,8 +12,8 @@ const pass_REGEX = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#_$!&])/;
 export const Register = (props) =>{
     //const userRef = useRef();
     const errRef = useRef();
-    const [text, setText] = useState('');
-    
+    const [fname, setFName] = useState('');
+    const [lname, setLName] = useState('');
     const [user, setUser] = useState('');
     const [validUser, setValidUser] = useState(false);
     
@@ -56,7 +56,7 @@ export const Register = (props) =>{
         
         try{
             const res = await axios.post(API_EP.REGISTER, 
-                JSON.stringify({fullname: text, username:user,password:password},
+                JSON.stringify({first_name: fname, last_name: lname, username:user, password:password},
                 {
                     headers: {'Content-Type': 'application/json'},
                     withCredentials: true
@@ -71,6 +71,9 @@ export const Register = (props) =>{
             }
             else if(err.response?.status === 409){
                 setErrMsg("Username Used");
+            }
+            else if(err.response?.status ===400){
+                setErrMsg("Bad Request Error");
             }
         }
 
@@ -92,14 +95,14 @@ export const Register = (props) =>{
                         
                         <label htmlFor="FirstName" className="">First Name: </label>
 
-                        <input value = {text} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setText(e.target.value);}}id = "FirstName" type = "text" 
+                        <input value = {fname} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setFName(e.target.value);}}id = "FirstName" type = "text" 
                         placeholder = "FirstName" autoComplete="off" required/>
                     </div>
                     <div className="grid grid-cols-2">
                         
                         <label htmlFor="LastName" className="">Last Name: </label>
 
-                        <input value = {text} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setText(e.target.value);}}id = "LastName" type = "text" 
+                        <input value = {lname} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setLName(e.target.value);}}id = "LastName" type = "text" 
                         placeholder = "LastName" autoComplete="off" required/>
                     </div>
                     
@@ -147,7 +150,7 @@ export const Register = (props) =>{
                     
 
                     <div>
-                        <input type = "submit" value = "Submit" className="button rounded bg-blue-500 px-6 py-2"/>        
+                        <button type = "submit" value = "Submit" className="button rounded bg-blue-500 px-6 py-2">Submit</button>        
                     </div>
                 <button onClick = {()=>navigate("/")} className="linkbtn my-6">Already have an account? Login here.</button>
              </div>

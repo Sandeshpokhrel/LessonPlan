@@ -165,3 +165,8 @@ DJOSER = {
        'user_create': 'core.serializers.UserCreateSerializer',
     } 
 }
+
+
+
+
+APPEND_SLASH=False
