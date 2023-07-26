@@ -90,10 +90,17 @@ export const Register = (props) =>{
                     </div>
                     <div className="grid grid-cols-2">
                         
-                        <label htmlFor="FullName" className="">FullName: </label>
+                        <label htmlFor="FirstName" className="">First Name: </label>
 
-                        <input value = {text} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setText(e.target.value);}}id = "FullName" type = "text" 
-                        placeholder = "FullName" autoComplete="off" required/>
+                        <input value = {text} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setText(e.target.value);}}id = "FirstName" type = "text" 
+                        placeholder = "FirstName" autoComplete="off" required/>
+                    </div>
+                    <div className="grid grid-cols-2">
+                        
+                        <label htmlFor="LastName" className="">Last Name: </label>
+
+                        <input value = {text} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setText(e.target.value);}}id = "LastName" type = "text" 
+                        placeholder = "LastName" autoComplete="off" required/>
                     </div>
                     
                     <div className="grid grid-cols-2 ">
