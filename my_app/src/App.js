@@ -3,7 +3,7 @@ import './App.css';
 import Login from './Components/login'
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import { Register } from './Components/Register/Register';
-import { Profile } from './Components/Profile/Profile';
+import { Profile } from './Components/Profile/profile';
 function App() {
   return (
     <Router>

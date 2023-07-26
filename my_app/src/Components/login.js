@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {useNavigate} from "react-router-dom";
 import { Header } from "./Header/Header";
-import { Profile } from "./Profile/Profile";
+import { Profile } from "./Profile/profile";
 import './login.css';
 import axios from "../api/axios/axios";
     const Login = ()=>{
