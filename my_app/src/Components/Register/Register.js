@@ -35,6 +35,7 @@ export const Register = (props) =>{
     useEffect(()=>{
         const result = pass_REGEX.test(password); // it is boolean.
         console.log(result);
+        console.log(password);
         setValidP(result);
         const match = password === matchP;
         setValidMatchP(match);
@@ -45,7 +46,7 @@ export const Register = (props) =>{
 
     },[user, password, matchP]);
 
-    const handleSubmit =async (e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault();
         const case1 = user_REGEX.test(user);
         const case2 = pass_REGEX.test(password);
@@ -55,13 +56,15 @@ export const Register = (props) =>{
         }
         
         try{
+            console.log(user);
+            console.log(password);
             const res = await axios.post(API_EP.REGISTER, 
-                JSON.stringify({first_name: fname, last_name: lname, username:user, password:password},
+                JSON.stringify({ first_name: fname, last_name: lname, username: user, password : password}),
                 {
-                    headers: {'Content-Type': 'application/json'},
-                    withCredentials: true
+                    headers: {'Content-Type': 'application/json'}
                 }
-                ))
+                )
+                
                 console.log(JSON.stringify(res));
                 setSuccess(true);
         }
@@ -75,6 +78,7 @@ export const Register = (props) =>{
             else if(err.response?.status ===400){
                 setErrMsg("Bad Request Error");
             }
+            console.log(err.response);
         }
 
     }
@@ -95,21 +99,21 @@ export const Register = (props) =>{
                         
                         <label htmlFor="FirstName" className="">First Name: </label>
 
-                        <input value = {fname} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setFName(e.target.value);}}id = "FirstName" type = "text" 
+                        <input value = {fname} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setFName(e.target.value);}}id = "fname" type = "text" 
                         placeholder = "FirstName" autoComplete="off" required/>
                     </div>
                     <div className="grid grid-cols-2">
                         
                         <label htmlFor="LastName" className="">Last Name: </label>
 
-                        <input value = {lname} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setLName(e.target.value);}}id = "LastName" type = "text" 
+                        <input value = {lname} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setLName(e.target.value);}}id = "lname" type = "text" 
                         placeholder = "LastName" autoComplete="off" required/>
                     </div>
                     
                     <div className="grid grid-cols-2 ">
                     
                         <label htmlFor="UserName" className ="">UserName: <span className={validUser ? "valid" : "hide"}><TiTick/></span></label>
-                       <input value = {user} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setUser(e.target.value);}} id = "UserName" type = "text" placeholder = "Username"
+                       <input value = {user} className = "border-2 border-slate-400 rounded p-1 " onChange = {(e)=>{setUser(e.target.value);}} id = "user" type = "text" placeholder = "Username"
                        aria-invalid = {validUser ? "false" : "true"} 
                        aria-describedby="uidnote" autoComplete = "off"
                        required/>
@@ -150,7 +154,7 @@ export const Register = (props) =>{
                     
 
                     <div>
-                        <button type = "submit" value = "Submit" className="button rounded bg-blue-500 px-6 py-2">Submit</button>        
+                        <input type = "submit" value = "Submit" className="button rounded bg-blue-500 px-6 py-2"/>      
                     </div>
                 <button onClick = {()=>navigate("/")} className="linkbtn my-6">Already have an account? Login here.</button>
              </div>

@@ -13,8 +13,8 @@ admin.site.index_title = 'Admin'
 #user
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['email', 'subject_count']
-    search_fields = ['email']
+    list_display = ['username', 'subject_count']
+    search_fields = ['username']
 
     def subject_count(self, user):
         subject_count = user.subject_set.count()
