@@ -78,15 +78,20 @@ export const Register = (props) =>{
             else if(err.response?.status ===400){
                 setErrMsg("Bad Request Error");
             }
-            console.log(err.response);
+            else{
+                setErrMsg("Something went wrong, Try with alternate password!");
+            }
+            
         }
 
     }
     let navigate = useNavigate();
     return (
         <>
-        <Header/>
         {success ? <Login/> : (
+            <>
+        <Header/>
+         
         <div className="shadow-2xl mx-96 my-6">
             <p ref = {errRef} className = {errMsg ? "errmsg": "offscreen"} aria-live="assertive">{errMsg}</p>
         <form onSubmit={handleSubmit}>
@@ -162,6 +167,7 @@ export const Register = (props) =>{
 
         </form>
         </div>
+        </>
         )}
         </>
         

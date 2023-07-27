@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import {useNavigate} from "react-router-dom";
 import { Header } from "./Header/Header";
 import { Profile } from "./Profile/profile";
 import './login.css';
 import axios from "../api/axios/axios";
+import authContext from "../packages/context/auth";
+import API_EP from "../utils/ApiEndPoint";
     const Login = ()=>{
     const errRef = useRef();
     const userRef = useRef();
@@ -14,30 +16,52 @@ import axios from "../api/axios/axios";
     const handleText =(e) =>{ setUser(e.target.value); }
     const handlePass = (e) =>{ setPassword(e.target.value); }
     let navigate =useNavigate();
-
+    const {setAuth} = useContext(authContext);
     useEffect(()=>{
     setErrMsg('');
     },[user, password]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('submitted');
-        setUser('');
-        setPassword('');
-        setSuccess(true);
+        
         try{
-
+            const res = await axios.post(API_EP.LOGIN, JSON.stringify({username: user, password:password}),
+            {
+                headers:{"Content-Type": "application/json"}
+            }
+            )
+            console.log(JSON.stringify(res?.data));
+            const accessToken = res?.data?.accessToken;
+            setAuth(user, password, accessToken);
+           // console.log('submitted');
+           setUser('');
+           setPassword('');
+           setSuccess(true);
+           console.log(res.data);
+            
         }
         catch(err){
-
+            if(!err?.response){
+                console.log("No server Response");
+            }
+            else if(err?.response === 400){
+                alert("Insert Username and Password");
+            }
+            else if(err?.response === 401){
+                alert("Unauthorized error!");
+            }
         }
+       
+        
         
     }
     return(
         
         <>
-        <Header/>
         {success ? <Profile /> : (
+            <>
+        <Header/>
+        
         <div className = "shadow-2xl mx-96 my-6">
             <form onSubmit={handleSubmit}>
             <p ref = {errRef} className = {errMsg ? "errmsg": "offscreen"} aria-live="assertive">{errMsg}</p>
@@ -64,6 +88,7 @@ import axios from "../api/axios/axios";
                 </div>
             </form>
         </div>
+        </>
         )}
         </>
         
