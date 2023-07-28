@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom";
 import { Header } from "./Header/Header";
 import { Profile } from "./Profile/profile";
 import './login.css';
 import axios from "../api/axios/axios";
-import authContext from "../packages/context/auth";
 import API_EP from "../utils/ApiEndPoint";
+import useAuth from "../packages/Auth/useAuth";
+import './login.css';
     const Login = ()=>{
     const errRef = useRef();
     const userRef = useRef();
@@ -16,7 +17,7 @@ import API_EP from "../utils/ApiEndPoint";
     const handleText =(e) =>{ setUser(e.target.value); }
     const handlePass = (e) =>{ setPassword(e.target.value); }
     let navigate =useNavigate();
-    const {setAuth} = useContext(authContext);
+    const {setAuth} = useAuth();
     useEffect(()=>{
     setErrMsg('');
     },[user, password]);
@@ -30,13 +31,14 @@ import API_EP from "../utils/ApiEndPoint";
                 headers:{"Content-Type": "application/json"}
             }
             )
-            console.log(JSON.stringify(res?.data));
-            const accessToken = res?.data?.accessToken;
+            console.log(JSON.stringify(res));
+            const accessToken = res?.data?.access;
             setAuth(user, password, accessToken);
            // console.log('submitted');
            setUser('');
            setPassword('');
            setSuccess(true);
+           console.log('success');
            console.log(res.data);
             
         }
@@ -44,11 +46,11 @@ import API_EP from "../utils/ApiEndPoint";
             if(!err?.response){
                 console.log("No server Response");
             }
-            else if(err?.response === 400){
-                alert("Insert Username and Password");
+            else if(err.response?.status === 400){
+                setErrMsg("Insert Username and Password");
             }
-            else if(err?.response === 401){
-                alert("Unauthorized error!");
+            else if(err.response?.status === 401){
+                setErrMsg("Unauthorized error!");
             }
         }
        
@@ -63,9 +65,9 @@ import API_EP from "../utils/ApiEndPoint";
         <Header/>
         
         <div className = "shadow-2xl mx-96 my-6">
+        <p ref = {errRef} className = {errMsg ? "errmsg": "offscreen"} aria-live="assertive">{errMsg}</p>
             <form onSubmit={handleSubmit}>
-            <p ref = {errRef} className = {errMsg ? "errmsg": "offscreen"} aria-live="assertive">{errMsg}</p>
-
+            
                 <div class="grid gap-5 place-content-center ">
                     
                     <div>
