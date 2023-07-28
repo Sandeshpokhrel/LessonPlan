@@ -50,7 +50,7 @@ import './login.css';
                 setErrMsg("Insert Username and Password");
             }
             else if(err.response?.status === 401){
-                setErrMsg("Unauthorized error!");
+                setErrMsg("Invalid username and password!");
             }
         }
        
