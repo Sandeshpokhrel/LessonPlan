@@ -1,13 +1,31 @@
 from rest_framework import serializers
-from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer
 
-from .models import Subject, SectionYear
+from .models import User, SectionYear, Subject
 
 
-# Custom serializer for creating user.
-class UserCreateSerializer(BaseUserCreateSerializer):
-    class Meta(BaseUserCreateSerializer.Meta):
-        fields = ['id', 'username', 'password', 'first_name', 'last_name']
+class UserRegisterationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username','first_name','last_name', 'password']
+        extra_kwargs={
+            'password':{'write_only':True}
+        }
+
+    def create(self, validate_data):
+        return User.objects.create_user(**validate_data)
+
+
+class UserLoginSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(max_length=255)
+    class Meta:
+        model = User
+        fields = ['username','password']
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name']
 
 
 # Serializer for sections:
@@ -29,7 +47,8 @@ class SubjectViewSerializer(serializers.ModelSerializer):
 class SubjectCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = ['id', 'sub_name']
+        fields = ['id', 'sub_name','user']
+
 
 
 # serializer for creating section year.
