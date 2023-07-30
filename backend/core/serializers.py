@@ -72,13 +72,21 @@ class AssignmentSerializer(serializers.ModelSerializer):
         fields = ['id', 'assign_name','file','chapter']
 
 
+# serializer for viewing resources. 
+class ResourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Resource 
+        fields = ['id', 'res_name','file','chapter']
+
+
 # serializer for viewing Chpater and topic.
 class ChapterViewSerializer(serializers.ModelSerializer):
     topic_set = TopicViewSerializer(many=True) 
     assignment_set = AssignmentSerializer(many=True)
+    resource_set = ResourceSerializer(many=True)
     class Meta:
         model = Chapter
-        fields = ['id', 'chapter_name', 'section_year', 'topic_set','assignment_set']
+        fields = ['id', 'chapter_name', 'section_year', 'topic_set','assignment_set','resource_set']
 
 
 # serializer for creating chapters.

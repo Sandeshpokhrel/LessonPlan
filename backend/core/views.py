@@ -8,7 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from .renderers import UserRenderer
 from .models import Subject, SectionYear, Chapter, Topic, Assignment, Resource
-from .serializers import UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, ChapterCreateSerializer, TopicCreateSerializer, AssignmentSerializer
+from .serializers import UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, ChapterCreateSerializer, TopicCreateSerializer, AssignmentSerializer, ResourceSerializer
 
 
 def get_tokens_for_user(user):
@@ -98,5 +98,12 @@ class TopicCreateAPI(CreateAPIView):
 class AssignmentCreateAPI(CreateAPIView):
    queryset = Assignment.objects.all()
    serializer_class = AssignmentSerializer
+   permission_classes = [IsAuthenticated]
+   renderer_classes = [UserRenderer]
+
+
+class ResourceCreateAPI(CreateAPIView):
+   queryset = Resource.objects.all()
+   serializer_class = ResourceSerializer
    permission_classes = [IsAuthenticated]
    renderer_classes = [UserRenderer]
