@@ -34,6 +34,7 @@ import './login.css';
             console.log(JSON.stringify(res));
             const accessToken = res?.data?.access;
             setAuth(user, password, accessToken);
+            console.log(user, accessToken, password);
            // console.log('submitted');
            setUser('');
            setPassword('');
