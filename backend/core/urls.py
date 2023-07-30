@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import  UserRegistrationView, UserLoginView, UserProfileView, SubjectListCreateAPI, SectionYearCreateAPI, ChapterTopicAPI, TopicCreateAPI
+from .views import  UserRegistrationView, UserLoginView, UserProfileView, SubjectListCreateAPI, SectionYearCreateAPI, ChapterTopicAPI, TopicCreateAPI, AssignmentCreateAPI
 
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path('sections/', SectionYearCreateAPI.as_view()),
     path('sections/<int:id>/chapters/', ChapterTopicAPI.as_view()),
     path('topics/', TopicCreateAPI.as_view()),
+    path('assignments/', AssignmentCreateAPI.as_view()),
 ]
