@@ -7,8 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .renderers import UserRenderer
-from .models import Subject, SectionYear
-from .serializers import UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer
+from .models import Subject, SectionYear, Chapter, Topic
+from .serializers import UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, ChapterCreateSerializer, TopicCreateSerializer
 
 
 def get_tokens_for_user(user):
@@ -68,7 +68,28 @@ class SubjectListCreateAPI(ListCreateAPIView):
 
 
 class SectionYearCreateAPI(CreateAPIView):
-    queryset = SectionYear
+    queryset = SectionYear.objects.all()
     serializer_class = SectionCreateSerializer
+    permission_classes = [IsAuthenticated]
+    renderer_classes = [UserRenderer]
+
+
+class ChapterTopicAPI(ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    renderer_classes = [UserRenderer]
+
+    def get_queryset(self):
+        return Chapter.objects.prefetch_related('topic_set').all().filter(section_year=self.kwargs['id'])
+   
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+          return ChapterViewSerializer
+        elif self.request.method == 'POST':
+          return ChapterCreateSerializer
+
+
+class TopicCreateAPI(CreateAPIView):
+    queryset = Topic.objects.all()
+    serializer_class = TopicCreateSerializer
     permission_classes = [IsAuthenticated]
     renderer_classes = [UserRenderer]

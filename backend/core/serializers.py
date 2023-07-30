@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import User, SectionYear, Subject
+from .models import User, SectionYear, Subject, Topic, Chapter
 
 
 class UserRegisterationSerializer(serializers.ModelSerializer):
@@ -32,7 +32,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class SectionSeializer(serializers.ModelSerializer):
     class Meta:
         model = SectionYear
-        fields = ['year','section']
+        fields = ['id', 'year','section']
 
 # Serializer for viewing subjects and sections:
 class SubjectViewSerializer(serializers.ModelSerializer):
@@ -55,4 +55,33 @@ class SubjectCreateSerializer(serializers.ModelSerializer):
 class SectionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = SectionYear
-        fields = ['year','section', 'subject']
+        fields = ['id', 'year','section', 'subject']
+
+
+# serializer for viewing Topics.
+class TopicViewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = ['id', 'topic_name']
+
+
+# serializer for viewing Chpater and topic.
+class ChapterViewSerializer(serializers.ModelSerializer):
+    topic_set = TopicViewSerializer(many=True) 
+    class Meta:
+        model = Chapter
+        fields = ['id', 'chapter_name', 'section_year', 'topic_set']
+
+
+# serializer for creating chapters.
+class ChapterCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chapter
+        fields = ['id', 'chapter_name','section_year']
+
+
+# serializer for creating topics.
+class TopicCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = ['id', 'topic_name', 'chapter']
