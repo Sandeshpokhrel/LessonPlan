@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom";
 import { Header } from "./Header/Header";
-import { Profile } from "./Profile/profile";
+import Profile from '../Components/Profile/profile';
 import './login.css';
 import axios from "../api/axios/axios";
 import API_EP from "../utils/ApiEndPoint";
@@ -31,7 +31,7 @@ import './login.css';
                 headers:{"Content-Type": "application/json"}
             }
             )
-            console.log(JSON.stringify(res));
+            console.log(JSON.stringify(res.data));
             const accessToken = res?.data?.access;
             setAuth(user, password, accessToken);
             console.log(user, accessToken, password);
