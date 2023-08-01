@@ -1,61 +1,38 @@
 import React,{useState} from "react";
 import { Header } from "../Header/Header";
 import Subject from "./Subjects/Subject";
+import API_EP from "../../utils/ApiEndPoint";
+import useAxiosPrivate from "../../packages/Auth/useAxiosPrivate";
 
-import Edit from "../../Components/Profile/components/edit.png";
-import Delete from "../../Components/Profile/components/del.png";
+
 const Profile = () => {
   const [subName, setSubName] = useState();
-  const handleClick = (e) => {
+  const axiosPrivate = useAxiosPrivate();
+  const handleClick = async(e) => {
     e.preventDefault();
-    
-   return(
-    <div className="border-solid border-2 border-slate-500 rounded px-10 py-6 grid gap-y-4 hover:scale-105 ">
-            <div className="border-solid border-1 border-blue-500  text-2xl grid justify-center mb-4">
-              {subName}
-            </div>
-            {/*starts Department loop */}
-            <div className="grid grid-cols-3">
-              <span>BCT</span>
-              <button type="submit" className="p-1 mx-1">
-                <img src={Edit} className="h-4 w-4" alt="" />
-              </button>
-              <button type="submit" className="p-1">
-                <img
-                  src={Delete}
-                  className="h-4 w-4"
-                  alt="couldnot show icon"
-                />
-              </button>
-            </div>
-            {/*starts another department loop 2 */}
-            <div className="grid grid-cols-3">
-              <span>BEI</span>
-              <button type="submit" className="p-1 mx-1">
-                <img src={Edit} className="h-4 w-4" alt="" />
-              </button>
-              <button type="submit" className="p-1">
-                <img
-                  src={Delete}
-                  className="h-4 w-4"
-                  alt="couldnot show icon"
-                />
-              </button>
-            </div>
+    let userID;
+    try{
+      const res0 = await axiosPrivate.get(API_EP.USERS);
+      console.log(res0.data);
+      userID = res0.data.id;
+    }catch(err){
+      console.log(err);
+    }
 
-            <button type="submit" className="button rounded bg-blue-500 p-1">
-              Add
-            </button>
-            <div className="grid grid-cols-2 gap-x-2">
-              <button type="submit" className="button rounded bg-blue-500 p-1">
-                Edit
-              </button>
-              <button type="submit" className="button rounded bg-blue-500 p-1">
-                Delete
-              </button>
-            </div>
-          </div>
-   )
+    try{
+      const res = await axiosPrivate.post(API_EP.SUBJECTS, JSON.stringify({sub_name: subName, user: userID}),
+      {
+          headers:{"Content-Type": "application/json"}
+      }
+      )
+      console.log(res.data);
+      
+  }
+  catch(err){
+      console.log(err);
+  }
+ 
+   
     
 }
   return (
