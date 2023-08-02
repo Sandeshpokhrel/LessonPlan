@@ -1,8 +1,40 @@
-import React from "react";
+import React,{useState} from "react";
 import { Header } from "../Header/Header";
-
 import Subject from "./Subjects/Subject";
-export const Profile = () => {
+import API_EP from "../../utils/ApiEndPoint";
+import useAxiosPrivate from "../../packages/Auth/useAxiosPrivate";
+
+
+const Profile = () => {
+  const [subName, setSubName] = useState();
+  const axiosPrivate = useAxiosPrivate();
+  const handleClick = async(e) => {
+    e.preventDefault();
+    let userID;
+    try{
+      const res0 = await axiosPrivate.get(API_EP.USERS);
+      console.log(res0.data);
+      userID = res0.data.id;
+    }catch(err){
+      console.log(err);
+    }
+
+    try{
+      const res = await axiosPrivate.post(API_EP.SUBJECTS, JSON.stringify({sub_name: subName, user: userID}),
+      {
+          headers:{"Content-Type": "application/json"}
+      }
+      )
+      console.log(res.data);
+      
+  }
+  catch(err){
+      console.log(err);
+  }
+ 
+   
+    
+}
   return (
     <>
       <Header />
@@ -16,10 +48,12 @@ export const Profile = () => {
           <input
             className="border-2 border-slate-500 mr-3 rounded p-1 "
             placeholder="Add Subject"
+            onChange = {(e)=>{setSubName(e.target.value);}}
           />
           <button
             type="submit"
             className="button rounded bg-blue-500 py-1 px-2"
+            onClick={handleClick}
           >
             Create
           </button>
@@ -28,3 +62,4 @@ export const Profile = () => {
     </>
   );
 };
+export default Profile;

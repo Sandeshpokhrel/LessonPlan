@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom";
 import { Header } from "./Header/Header";
-import { Profile } from "./Profile/profile";
+import Profile from '../Components/Profile/profile';
 import './login.css';
 import axios from "../api/axios/axios";
 import API_EP from "../utils/ApiEndPoint";
@@ -17,7 +17,7 @@ import './login.css';
     const handleText =(e) =>{ setUser(e.target.value); }
     const handlePass = (e) =>{ setPassword(e.target.value); }
     let navigate =useNavigate();
-    const {setAuth} = useAuth();
+    const {auth,setAuth} = useAuth();
     useEffect(()=>{
     setErrMsg('');
     },[user, password]);
@@ -32,9 +32,10 @@ import './login.css';
             }
             )
             console.log(JSON.stringify(res));
-            const accessToken = res?.data?.access;
-            setAuth(user, password, accessToken);
-            console.log(user, accessToken, password);
+            const accessToken = res?.data?.token.access;
+            const refreshToken = res?.data?.token.refresh;
+            setAuth({user, password, accessToken, refreshToken});
+            console.log(accessToken);
            // console.log('submitted');
            setUser('');
            setPassword('');

@@ -3,7 +3,7 @@ import './App.css';
 import Login from './Components/login'
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import { Register } from './Components/Register/Register';
-import { Profile } from './Components/Profile/profile';
+import Profile from "./Components/Profile/profile"
 import Layout from './Layout/layout';
 import RequireAuth from './packages/Auth/requireAuth';
 function App() {

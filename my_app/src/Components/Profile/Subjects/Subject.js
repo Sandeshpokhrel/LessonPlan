@@ -1,17 +1,17 @@
 import API_EP from "../../../utils/ApiEndPoint";
 import Edit from "../components/edit.png";
 import Delete from "../components/del.png";
-import axios from "../../../api/axios/axios";
 import { useEffect, useState } from "react";
-
+import useAxiosPrivate from '../../../packages/Auth/useAxiosPrivate'
 const Subject = () => {
     const [subject, setSubject] = useState();
+    const axiosPrivate = useAxiosPrivate();
     useEffect(()=>{
         let isMounted = true;
         const controller = new AbortController();
         const getSubjects = async () =>{
             try{    
-                const res = await axios.get(API_EP.SUBJECTS,{ signal: controller.signal});
+                const res = await axiosPrivate.get(API_EP.SUBJECTS,{ signal: controller.signal});
                 console.log(res.data);
                 isMounted && setSubject(res.data);
             }catch(err){
