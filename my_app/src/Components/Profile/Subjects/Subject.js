@@ -7,7 +7,7 @@ import AddName from "../../popUp/AddName";
 const Subject = (props) => {
     const axiosPrivate = useAxiosPrivate();
     const [subject, setSubject] = useState();
-    // const [bool, setBool] = useState();
+    const [bool, setBool] = useState();
     useEffect(()=>{
         let isMounted = true;
         const controller = new AbortController();
@@ -46,17 +46,38 @@ const Subject = (props) => {
           controller.abort();
       }
   },[props.bool]);
+  //after deleting 
+  useEffect(()=>{
+    let isMounted = true;
+    const controller = new AbortController();
+    const getSubjects = async () =>{
+        try{    
+            const res = await axiosPrivate.get(API_EP.SUBJECTS,{ signal: controller.signal});
+            console.log(res.data);
+            isMounted && setSubject(res.data);
+           
+        }catch(err){
+            console.error(err);
+        }
+    }
+        getSubjects();
+      
+    return() => {
+        isMounted = false;
+        controller.abort();
+    }
+},[bool]);
 
-  // const handleDelete = async(e)=>{
-  //   e.preventDefault();
-  //   try{
-  //       const res = await axiosPrivate.delete(API_EP.SUBJECTS, JSON.stringify({
-  //         id: id
-  //       }))
-  //   }catch(err){
-  //     console.error(err);
-  //   }
-  // }
+  const handleDelete = async(e, id)=>{
+    setBool(false);
+    console.log(id);
+    try{
+        const res = await axiosPrivate.delete(API_EP.SUBJECTS + `${id}/`)
+        setBool(true);
+    }catch(err){
+      console.error(err);
+    }
+  }
 
   return (
     subject ? (
@@ -89,7 +110,7 @@ const Subject = (props) => {
               <button type="submit" className="button rounded bg-blue-500 p-1">
                 Edit
               </button>
-              <button type="submit" className="button rounded bg-blue-500 p-1" id = {item.id} >
+              <button type="submit" className="button rounded bg-blue-500 p-1"  onClick = {(e)=>handleDelete(e,item.id)} >
                 Delete
               </button>
             </div>

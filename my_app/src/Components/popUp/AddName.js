@@ -43,7 +43,7 @@ function AddName(props) {
         )
         console.log(res.data);
         setBool(true);
-      
+        handleClose();
         
     }
     catch(err){
