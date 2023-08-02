@@ -17,7 +17,6 @@ class Subject(models.Model):
 #section and year
 class SectionYear(models.Model):
   section = models.CharField(max_length=255)
-  year = models.CharField(max_length=255)
   subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
   def __str__(self) -> str:

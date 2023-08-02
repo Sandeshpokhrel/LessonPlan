@@ -38,7 +38,7 @@ class SubjectAdmin(admin.ModelAdmin):
 #section and year
 @admin.register(models.SectionYear)
 class SectionYearAdmin(admin.ModelAdmin):
-    list_display = ['section', 'year', 'plan_count', 'chapter_count']
+    list_display = ['section', 'plan_count', 'chapter_count']
     search_fields = ['section']
     autocomplete_fields = ['subject']
     
