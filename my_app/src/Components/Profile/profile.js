@@ -8,8 +8,10 @@ import useAxiosPrivate from "../../packages/Auth/useAxiosPrivate";
 const Profile = () => {
   const [subName, setSubName] = useState();
   const axiosPrivate = useAxiosPrivate();
+  const [bool, setBool] = useState(false);
   const handleClick = async(e) => {
     e.preventDefault();
+    setBool(false);
     let userID;
     try{
       const res0 = await axiosPrivate.get(API_EP.USERS);
@@ -26,6 +28,9 @@ const Profile = () => {
       }
       )
       console.log(res.data);
+      setBool(true);
+
+    
       
   }
   catch(err){
@@ -41,7 +46,7 @@ const Profile = () => {
       <div className="grid justify-center px-40">
         <div className="flex justify-center flex-wrap my-4 gap-16 px ">
           {/*starts the subject loop */}
-          <Subject />
+          <Subject bool = {bool} setBool = {setBool}/>
         </div>
 
         <div className="my-4">
