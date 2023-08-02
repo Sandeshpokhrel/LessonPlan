@@ -32,7 +32,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class SectionSeializer(serializers.ModelSerializer):
     class Meta:
         model = SectionYear
-        fields = ['id', 'year','section']
+        fields = ['id', 'section']
 
 # Serializer for viewing subjects and sections:
 class SubjectViewSerializer(serializers.ModelSerializer):
@@ -55,7 +55,7 @@ class SubjectCreateSerializer(serializers.ModelSerializer):
 class SectionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = SectionYear
-        fields = ['id', 'year','section', 'subject']
+        fields = ['id','section', 'subject']
 
 
 # serializer for viewing Topics.
