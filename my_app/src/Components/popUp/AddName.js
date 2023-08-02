@@ -4,12 +4,37 @@ import API_EP from '../../utils/ApiEndPoint';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEffect } from 'react';
 function AddName(props) {
   const [show, setShow] = useState(false);
   const [section, setSection] = useState('');
+  const [bool, setBool] = useState(false);
+  useEffect(()=>{
+    let isMounted = true;
+    const controller = new AbortController();
+    const getSubjects = async () =>{
+        try{    
+            const res = await axiosPrivate.get(API_EP.SUBJECTS,{ signal: controller.signal});
+            console.log(res.data);
+            isMounted && props.setSubject(res.data);
+        }catch(err){
+            console.error(err);
+        }
+    }
+        getSubjects();
+      
+    return() => {
+        isMounted = false;
+        controller.abort();
+    }
+},[bool]);
+
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
     const handleConfirm = async(e) =>{
+      setBool(false);
       try{
         const res = await axiosPrivate.post(API_EP.SECTIONS, JSON.stringify({subject: props._id, section: section }),
         {
@@ -17,6 +42,7 @@ function AddName(props) {
         }
         )
         console.log(res.data);
+        setBool(true);
       
         
     }

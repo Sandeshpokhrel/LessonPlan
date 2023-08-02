@@ -7,6 +7,7 @@ import AddName from "../../popUp/AddName";
 const Subject = (props) => {
     const axiosPrivate = useAxiosPrivate();
     const [subject, setSubject] = useState();
+    // const [bool, setBool] = useState();
     useEffect(()=>{
         let isMounted = true;
         const controller = new AbortController();
@@ -56,9 +57,7 @@ const Subject = (props) => {
   //     console.error(err);
   //   }
   // }
-  const handleAdd = ()=>{
 
-  }
   return (
     subject ? (
       subject.map((item)=>(
@@ -84,7 +83,7 @@ const Subject = (props) => {
             
             )}
         
-            <AddName _id = {item.id}/>
+            <AddName _id = {item.id} setSubject = {setSubject}/>
             
             <div className="grid grid-cols-2 gap-x-2">
               <button type="submit" className="button rounded bg-blue-500 p-1">
