@@ -44,7 +44,7 @@ const Profile = () => {
   return (
     <>
       <Header />
-      <NavBar/>
+      <NavBar page={false}/>
       <div className="grid justify-center px-40">
         <div className="flex justify-center flex-wrap my-4 gap-16 px ">
           {/*starts the subject loop */}
