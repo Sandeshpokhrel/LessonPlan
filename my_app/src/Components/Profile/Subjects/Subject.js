@@ -81,9 +81,11 @@ const Subject = (props) => {
     }
   }
   const handleNavigate= ()=>{
-    navigate('/Profile/syllabus');
+    navigate('/syllabus');
   }
-
+  const spanStyles = {
+    cursor: 'pointer',
+  };
   return (
     subject ? (
       subject.map((item)=>(
@@ -93,7 +95,7 @@ const Subject = (props) => {
             </div>
             {item.sectionyear_set.map((nesteditem)=>(
                 <div className="grid grid-cols-3" key = {nesteditem.id} >
-                <span onClick= {handleNavigate}>{nesteditem.section}</span>
+                <span onClick= {handleNavigate} style = {spanStyles}>{nesteditem.section}</span>
                 <button type="submit" className="p-1 mx-1">
                   <img src={Edit} className="h-4 w-4" alt="" />
                 </button>
