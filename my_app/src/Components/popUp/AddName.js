@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect } from 'react';
+
 function AddName(props) {
   const [show, setShow] = useState(false);
   const [section, setSection] = useState('');

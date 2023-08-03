@@ -4,10 +4,12 @@ import Delete from "../components/del.png";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from '../../../packages/Auth/useAxiosPrivate'
 import AddName from "../../popUp/AddName";
+import { useNavigate } from 'react-router-dom';
 const Subject = (props) => {
     const axiosPrivate = useAxiosPrivate();
     const [subject, setSubject] = useState();
     const [bool, setBool] = useState();
+    const navigate = useNavigate();
     useEffect(()=>{
         let isMounted = true;
         const controller = new AbortController();
@@ -78,6 +80,9 @@ const Subject = (props) => {
       console.error(err);
     }
   }
+  const handleNavigate= ()=>{
+    navigate('/Profile/syllabus');
+  }
 
   return (
     subject ? (
@@ -87,8 +92,8 @@ const Subject = (props) => {
               {item.sub_name}
             </div>
             {item.sectionyear_set.map((nesteditem)=>(
-                <div className="grid grid-cols-3" key = {nesteditem.id}>
-                <span>{nesteditem.section}</span>
+                <div className="grid grid-cols-3" key = {nesteditem.id} >
+                <span onClick= {handleNavigate}>{nesteditem.section}</span>
                 <button type="submit" className="p-1 mx-1">
                   <img src={Edit} className="h-4 w-4" alt="" />
                 </button>

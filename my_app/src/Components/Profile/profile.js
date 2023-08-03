@@ -3,6 +3,7 @@ import { Header } from "../Header/Header";
 import Subject from "./Subjects/Subject";
 import API_EP from "../../utils/ApiEndPoint";
 import useAxiosPrivate from "../../packages/Auth/useAxiosPrivate";
+import NavBar from "../NavBar/NavBar";
 
 
 const Profile = () => {
@@ -43,6 +44,7 @@ const Profile = () => {
   return (
     <>
       <Header />
+      <NavBar/>
       <div className="grid justify-center px-40">
         <div className="flex justify-center flex-wrap my-4 gap-16 px ">
           {/*starts the subject loop */}

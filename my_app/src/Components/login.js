@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef} from "react";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import { Header } from "./Header/Header";
 import Profile from '../Components/Profile/profile';
 import './login.css';
@@ -62,7 +62,7 @@ import './login.css';
     return(
         
         <>
-        {success ? <Profile /> : (
+        {success ? <Navigate to = "/Profile" /> : (
             <>
         <Header/>
         

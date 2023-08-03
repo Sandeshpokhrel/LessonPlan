@@ -6,9 +6,12 @@ import { Register } from './Components/Register/Register';
 import Profile from "./Components/Profile/profile"
 import Layout from './Layout/layout';
 import RequireAuth from './packages/Auth/requireAuth';
+import Syllabus from './Components/Profile/Syllabus/Syllabus';
+import NavBar from './Components/NavBar/NavBar';
 function App() {
   return (
     <Router>
+      
         <Routes>
           
           <Route path = "/" element = {<Layout/>}>
@@ -16,9 +19,11 @@ function App() {
           <Route element = {<Login/>} path = "/" exact/>
           <Route element = {<RequireAuth/>} >
           <Route element = {<Profile/>} path = "/Profile" />
+          <Route element = {<Syllabus/>} path = "/syllabus"/>
           </Route>
           
           {/* </Route> */}
+         
            <Route element = {<Register/>} path = "/Register" /> 
           </Route>
         </Routes>
