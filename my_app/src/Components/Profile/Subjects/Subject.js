@@ -88,7 +88,7 @@ const Subject = (props) => {
     subject ? (
       subject.map((item)=>(
         <div className="border-solid border-2 border-slate-500 rounded px-10 py-6 grid gap-y-4 hover:scale-105 " key ={item.id}>
-            <div className="border-solid border-1 border-blue-500  text-2xl grid justify-center mb-4">
+            <div className="border-solid text-2xl grid justify-center mb-4">
               {item.sub_name}
             </div>
             {item.sectionyear_set.map((nesteditem)=>(
