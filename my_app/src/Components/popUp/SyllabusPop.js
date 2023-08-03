@@ -4,10 +4,22 @@ import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import 'flowbite/dist/flowbite.min.css';
+import { axiosPrivate } from '../../api/axios/axios';
+import API_EP from '../../utils/ApiEndPoint';
 const SyllabusPop = () => {
     const [show, setShow] = useState(false);
+    const [chapter, setChapter] = useState('');
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    // const handleChapter = async() =>{
+    //     try{
+    //         const res = await axiosPrivate.post(API_EP.SUBJECTS + `${id}/chapters/`, JSON.stringify({
+
+    //         }))
+    //     }catch(err){
+
+    //     }
+    // }
     const handleConfirm = async(e) =>{
         
           handleClose();
@@ -36,9 +48,9 @@ const SyllabusPop = () => {
     <div class="grid grid-cols-3 ">
         <div >
             <div>
-                <input type="text" placeholder="Chapters" width="10px" class="border-2 rounded p-1 border-slate-500"/>
+                <input type="text" placeholder="Chapters" width="10px" class="border-2 rounded p-1 border-slate-500" value = {chapter}onChange = {(e)=>{setChapter(e.target.value)}}/>
                 <button data-modal-hide="large-modal" type="button" 
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
                     Add
                 </button>
             </div>
@@ -94,17 +106,17 @@ const SyllabusPop = () => {
             
             <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600 ">
                 <button data-modal-hide="extralarge-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Upload</button>
-                <button data-modal-hide="extralarge-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancel</button>
+                <button data-modal-hide="extralarge-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" onClick={handleConfirm}>Cancel</button>
             </div>
         </div>
     
     </Modal.Body>
-    <Modal.Footer>
+    {/* <Modal.Footer>
       <Button variant="secondary" onClick={handleClose}>
         Close
       </Button>
       <Button variant="primary" onClick = {handleConfirm}>Confirm</Button>
-    </Modal.Footer>
+    </Modal.Footer> */}
   </Modal>
     </>
     

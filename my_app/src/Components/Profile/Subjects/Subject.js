@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import useAxiosPrivate from '../../../packages/Auth/useAxiosPrivate'
 import AddName from "../../popUp/AddName";
 import { useNavigate } from 'react-router-dom';
+import DepartButton from "./DepartButton";
 const Subject = (props) => {
     const axiosPrivate = useAxiosPrivate();
     const [subject, setSubject] = useState();
@@ -80,12 +81,8 @@ const Subject = (props) => {
       console.error(err);
     }
   }
-  const handleNavigate= ()=>{
-    navigate('/syllabus');
-  }
-  const spanStyles = {
-    cursor: 'pointer',
-  };
+
+
   return (
     subject ? (
       subject.map((item)=>(
@@ -95,7 +92,7 @@ const Subject = (props) => {
             </div>
             {item.sectionyear_set.map((nesteditem)=>(
                 <div className="grid grid-cols-3" key = {nesteditem.id} >
-                <span onClick= {handleNavigate} style = {spanStyles}>{nesteditem.section}</span>
+                <DepartButton section = {nesteditem.section} _id = {nesteditem.id}/>
                 <button type="submit" className="p-1 mx-1">
                   <img src={Edit} className="h-4 w-4" alt="" />
                 </button>
