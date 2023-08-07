@@ -11,7 +11,7 @@ const Syllabus = () => {
     <>
     <Header />
     <NavBar page = {true} section = {section}/>
-      <SyllabusPop/>
+      <SyllabusPop id = {id}/>
     
     </>
     
