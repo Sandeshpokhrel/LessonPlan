@@ -12,6 +12,7 @@ function SyllabusPop(props) {
     const [cid, setCid] = useState(''); 
     const [hidec, setHidec] = useState(false);
     const [fileUploaded, setFileUploaded] = useState(null);
+    const [fileUploadedR, setFileUploadedR] = useState(null);
     const [assign, setAssign] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [resource, setResource] = useState('');
@@ -58,6 +59,9 @@ function SyllabusPop(props) {
     const handleFileChange = (e) =>{
          setFileUploaded(e.target.files[0]);
     }
+    const handleFileChangeR = (e) =>{
+        setFileUploadedR(e.target.files[0]);
+   }
     const handleAssign = async() =>{
         
         console.log(props.id)
@@ -67,6 +71,26 @@ function SyllabusPop(props) {
             formData.append('assign_name', assign);
             formData.append('chapter', cid);
             const res = await axiosPrivate.post(API_EP.ASSIGNMENTS, formData,{
+                headers: {
+                    'Content-Type': 'multipart/form-data', 
+                  }
+            })
+            console.log(res);
+            alert("successfully Added");
+
+        }catch(err){
+            setErrMsg("Cannot Add File. First Add Chapter");
+        }
+    }
+    const handleResource = async() =>{
+        
+        console.log(props.id)
+        try{
+            const formData = new FormData();
+            formData.append('file', fileUploadedR);
+            formData.append('res_name', resource);
+            formData.append('chapter', cid);
+            const res = await axiosPrivate.post(API_EP.RESOURCES, formData,{
                 headers: {
                     'Content-Type': 'multipart/form-data', 
                   }
@@ -158,12 +182,12 @@ function SyllabusPop(props) {
 
         <div>
             <div>
-                <input type="text" placeholder="Resources" class="border-2 rounded p-1 border-slate-500" onChange = {handleResource}/>
+                <input type="text" placeholder="Resources" class="border-2 rounded p-1 border-slate-500" onChange = {(e)=>{setResource(e.target.value)}}/>
                 <form action="/action_page.php" class="my-2">
-                    <input type="file" id="myFile" name="filename" placeholder="upload"/>
+                    <input type="file" id="myFile" name="filename" placeholder="upload" onChange= {handleFileChangeR}/>
                 </form>
                 <button data-modal-hide="large-modal" type="button" 
-                class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick = {handleResource}>
                 Add
                 </button>
             </div>
