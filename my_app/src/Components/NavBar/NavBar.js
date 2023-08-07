@@ -12,6 +12,7 @@ function NavBar(props) {
     padding: '6px',
     borderRadius: '1rem'
   };
+  const section = props.section;
   return (
     <>
       <Navbar bg="light" data-bs-theme="light">
@@ -21,11 +22,11 @@ function NavBar(props) {
             <Nav className="me-auto">
              
               
-              <Nav.Link as={Link} to="/syllabus">Syllabus</Nav.Link> 
+              <Nav.Link as={Link} to="/syllabus" state = {{section}}>Syllabus</Nav.Link> 
               <Nav.Link as={Link} to="/assignments">Assignments</Nav.Link> 
               <Nav.Link as={Link} to="/resources">Resources</Nav.Link> 
               <span style ={spanStyle}>
-              {props.section}
+              {section}
               </span>
             </Nav>
             

@@ -5,7 +5,8 @@ class API_EP{
     static USERS = '/auth/users/me/';
     static SECTIONS = '/sections/';
     static TOPICS = '/topics/';
-    static ASSIGN = '/assignments/';
+    static ASSIGNMENTS = '/assignments/';
     static RESOURCES = '/resources/';
+    static TOPICS = '/topics/'
 }
 export default API_EP;

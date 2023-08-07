@@ -1,67 +1,136 @@
-import React from 'react'
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
-import 'flowbite/dist/flowbite.min.css';
-import { axiosPrivate } from '../../api/axios/axios';
+import './syllabusPop.css'
+import useAxiosPrivate from '../../packages/Auth/useAxiosPrivate';
 import API_EP from '../../utils/ApiEndPoint';
-const SyllabusPop = () => {
+function SyllabusPop(props) {
     const [show, setShow] = useState(false);
     const [chapter, setChapter] = useState('');
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    // const handleChapter = async() =>{
-    //     try{
-    //         const res = await axiosPrivate.post(API_EP.SUBJECTS + `${id}/chapters/`, JSON.stringify({
+    const [topics, setTopics] = useState('');
+    const axiosPrivate = useAxiosPrivate();
+    const [cid, setCid] = useState(''); 
+    const [hidec, setHidec] = useState(false);
+    const [fileUploaded, setFileUploaded] = useState(null);
+    const [assign, setAssign] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+    const [resource, setResource] = useState('');
+    useEffect(()=>{
+        setErrMsg('');
+    },[chapter, topics, assign]);
 
-    //         }))
-    //     }catch(err){
-
-    //     }
-    // }
-    const handleConfirm = async(e) =>{
+    const handleChapter = async() =>{
         
-          handleClose();
-          
-    
-     
-      }
+        console.log(props.id)
+        try{
+            const res = await axiosPrivate.post(`${API_EP.SECTIONS}${0}/chapters/`, JSON.stringify({
+                chapter_name: chapter, section_year: props.id
+
+            }),{
+                headers:{"Content-Type": "application/json"}
+            })
+            console.log(res);
+            setCid(res.data.id);
+            setChapter('');
+            setHidec(true);
+            alert("successfully Added");
+
+        }catch(err){
+            console.error(err);
+        }
+    }
+    const handleTopics = async() =>{
+        console.log(cid);
+        try{
+            const res = await axiosPrivate.post(API_EP.TOPICS, JSON.stringify({
+                topic_name: topics , chapter: cid
+
+            }),{
+                headers:{"Content-Type": "application/json"}
+            })
+            console.log(res);
+            setTopics('');
+            alert("successfully Added");
+        }catch(err){
+            console.error(err);
+        }
+    }
+    const handleFileChange = (e) =>{
+         setFileUploaded(e.target.files[0]);
+    }
+    const handleAssign = async() =>{
+        
+        console.log(props.id)
+        try{
+            const formData = new FormData();
+            formData.append('file', fileUploaded);
+            formData.append('assign_name', assign);
+            formData.append('chapter', cid);
+            const res = await axiosPrivate.post(API_EP.ASSIGNMENTS, formData,{
+                headers: {
+                    'Content-Type': 'multipart/form-data', 
+                  }
+            })
+            console.log(res);
+            alert("successfully Added");
+
+        }catch(err){
+            setErrMsg("Cannot Add File. First Add Chapter");
+        }
+    }
+
+
+
   return (
     <>
-    <button onClick = {handleShow} type="submit" className="button rounded bg-blue-500 p-1" >
-              Add Syllabus
-        </button>
-    <Modal
-    show={show}
-    onHide={handleClose}
-    backdrop="static"
-    keyboard={false}
-  >
-    <Modal.Header closeButton>
-      <Modal.Title>Add department/Section Name</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-    <div class="p-6 space-y-6">
+      <Button variant="primary" onClick={() => setShow(true)}>
+        Add Syllabus
+      </Button>
+
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        dialogClassName="custom-modal"
+        aria-labelledby="example-custom-modal-styling-title"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-custom-modal-styling-title">
+            Syllabus
+          </Modal.Title>
+
+          <p  className = {errMsg ? "errmsg": "offscreen"} aria-live="assertive">{errMsg}</p>
+        </Modal.Header>
+        <Modal.Body>
+        <div class="p-6 space-y-6">
     <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400"/>
 
     <div class="grid grid-cols-3 ">
         <div >
-            <div>
+            {!hidec &&
+                <div>
+                    <label htmlFor="chapter" className="">Chapter: </label>
+                    <br/>
                 <input type="text" placeholder="Chapters" width="10px" class="border-2 rounded p-1 border-slate-500" value = {chapter}onChange = {(e)=>{setChapter(e.target.value)}}/>
                 <button data-modal-hide="large-modal" type="button" 
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={handleChapter}>
                     Add
                 </button>
             </div>
-
-            <div class="ml-6 my-2">
-                <input type="text" placeholder="Topics" class="border-2 rounded p-1 border-slate-500" />
-                <button data-modal-hide="large-modal" type="button" 
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Add
-                </button>
-            </div>
+            }
+            
+            {hidec &&
+                 <div >
+                    <label htmlFor="topics" className="">Topic: </label>
+                    <br/>
+                 <input type="text" placeholder="Topics" width="10px" class="border-2 rounded p-1 border-slate-500" onChange={(e)=>{setTopics(e.target.value)}} />
+                
+                 <button data-modal-hide="large-modal" type="button" 
+                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"  onClick={handleTopics}>
+                     Add
+                 </button>
+             </div>
+            }
+           
 
 
 
@@ -69,17 +138,18 @@ const SyllabusPop = () => {
 
         <div>
             <div>
-                <input type="text" placeholder="Assignment" class="border-2 rounded p-1 border-slate-500" />
+            
+                <input type="text" placeholder="Assignment" class="border-2 rounded p-1 border-slate-500" onChange = {(e)=>{setAssign(e.target.value)}}/>
                 
-                <form action="/action_page.php" class="my-2">
-                    <input type="file" id="myFile" name="filename" placeholder="upload"/>
+                <form action="/action_page.php" class="my-2" >
+                    <input type="file" id="myFile" name="filename" placeholder="upload" onChange={handleFileChange}/>
                 </form>
 
             </div>
 
             <div class="relative h-32 w-60">
                     <button data-modal-hide="large-modal" type="button" 
-                    class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick = {handleAssign}>
                     Add
                     </button>
               </div>
@@ -88,7 +158,10 @@ const SyllabusPop = () => {
 
         <div>
             <div>
-                <input type="text" placeholder="Resources" class="border-2 rounded p-1 border-slate-500" />
+                <input type="text" placeholder="Resources" class="border-2 rounded p-1 border-slate-500" onChange = {handleResource}/>
+                <form action="/action_page.php" class="my-2">
+                    <input type="file" id="myFile" name="filename" placeholder="upload"/>
+                </form>
                 <button data-modal-hide="large-modal" type="button" 
                 class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Add
@@ -102,27 +175,11 @@ const SyllabusPop = () => {
 
     </div>
 
-
-            
-            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600 ">
-                <button data-modal-hide="extralarge-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Upload</button>
-                <button data-modal-hide="extralarge-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" onClick={handleConfirm}>Cancel</button>
-            </div>
         </div>
-    
-    </Modal.Body>
-    {/* <Modal.Footer>
-      <Button variant="secondary" onClick={handleClose}>
-        Close
-      </Button>
-      <Button variant="primary" onClick = {handleConfirm}>Confirm</Button>
-    </Modal.Footer> */}
-  </Modal>
+        </Modal.Body>
+      </Modal>
     </>
-    
-
-    
-  )
+  );
 }
 
-export default SyllabusPop
+export default SyllabusPop;
