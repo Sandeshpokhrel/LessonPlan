@@ -8,7 +8,6 @@ class API_EP{
     static ASSIGNMENTS = '/assignments/';
     static RESOURCES = '/resources/';
     static TOPICS = '/topics/';
-    static SYLLABUS = 'sections/2/chapters/';
 
 }
 export default API_EP;

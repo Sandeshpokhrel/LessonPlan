@@ -2,7 +2,7 @@ import React from 'react'
 import useAxiosPrivate from '../../../packages/Auth/useAxiosPrivate'
 import API_EP from '../../../utils/ApiEndPoint';
 import { useEffect, useState } from 'react';
-const SyllabusTile = () => {
+const SyllabusTile = (props) => {
     const axiosPrivate = useAxiosPrivate();
     const [syllabus, setSyllabus] = useState();
     useEffect(()=>{
@@ -10,7 +10,7 @@ const SyllabusTile = () => {
         const controller = new AbortController();
         const getSyllabus = async () =>{
             try{    
-                const res = await axiosPrivate.get(API_EP.SYLLABUS,{ signal: controller.signal});
+                const res = await axiosPrivate.get(`${API_EP.SECTIONS}${props.id}/chapters/`,{ signal: controller.signal});
                 console.log(res.data);
                 isMounted && setSyllabus(res.data);
             }catch(err){
@@ -33,37 +33,44 @@ const SyllabusTile = () => {
             
                 <div>
                   <ul class="list-none">
-                    <li>2-D geometry</li>
+                    <li>{item.chapter_name}</li>
       
                     <div class="grid px-6 ul">
-                      <ul class="list-disc">
+                    <ul class="list-disc">
+                        {item.topic_set.map((nestitem)=>(
+                            
+                            <li>{nestitem.topic_name}</li>
                           
-                        <li>line</li>
-                        <li>ellipse</li>
-                        <li>circle</li>
-                      </ul>
+                        ))}
+                    </ul>
+                      
                     </div>
                   </ul>
                 </div>
       
                 
                 <div>
-                  <div>
-                      2-d gemonetry assignment
-                      <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm">
-                          Download
-                      </button>
-                  </div>
+                    {item.assignment_set.map((nesteditem)=>(
+                        <div>
+                        {nesteditem.assign_name}
+                        <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm">
+                            Download
+                        </button>
+                    </div>
+                    ))}
+                  
                 </div>
       
                 
                 <div>
-                  <div>
-                      2-d gemonetry resources
-                      <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm">
-                          Download
-                      </button>
-                  </div>
+                {item.resource_set.map((nesteditem)=>(
+                            <div>
+                            <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm">
+                                Download
+                            </button>
+                </div> 
+                        ))}
+                  
                 </div>
               </div>
             </div>

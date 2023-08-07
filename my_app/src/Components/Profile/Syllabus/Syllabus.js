@@ -12,7 +12,7 @@ const Syllabus = () => {
     <>
     <Header />
     <NavBar page = {true} section = {section}/>
-      <SyllabusTile/>
+      <SyllabusTile id = {id}/>
       <SyllabusPop id = {id}/>
     
     </>
