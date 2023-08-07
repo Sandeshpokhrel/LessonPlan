@@ -56,9 +56,9 @@ class SectionYearAdmin(admin.ModelAdmin):
 #plan
 @admin.register(models.Plan)
 class PlanAdmin(admin.ModelAdmin):
-    list_display = ['plan_name', 'activity_count', 'test_count', 'chapter_name']
+    list_display = ['plan_name', 'activity_count', 'test_count']
     search_fields = ['plan_name']
-    autocomplete_fields = ['sectionyear', 'chapter']
+    autocomplete_fields = ['sectionyear']
     
     def activity_count(self, plan):
         activity_count = plan.activity_set.count()
@@ -69,12 +69,7 @@ class PlanAdmin(admin.ModelAdmin):
         test_count = plan.test_set.count()
         url = reverse('admin:core_test_changelist') + '?' + urlencode({'plan__id': str(plan.id)})
         return format_html('<a href ="{}">{}</a>', url, test_count)
-    
-    def chapter_name(self, plan):
-        chapter_name = plan.chapter
-        url = reverse('admin:core_chapter_changelist') + '?' + urlencode({'plan__id': str(plan.chapter_id)})
-        return format_html('<a href ="{}">{}</a>', url, chapter_name)
-
+   
 
 #activity
 @admin.register(models.Activity)

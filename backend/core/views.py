@@ -8,8 +8,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .renderers import UserRenderer
-from .models import Subject, SectionYear, Chapter, Topic, Assignment, Resource
-from .serializers import UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, ChapterCreateSerializer, TopicCreateSerializer, AssignmentSerializer, ResourceSerializer
+from .models import Subject, SectionYear, Chapter, Topic, Assignment, Resource, Plan, PlanChapter, PlanAssignment, PlanResource, PlanTopic
+from .serializers import UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, ChapterCreateSerializer, TopicCreateSerializer, AssignmentSerializer, ResourceSerializer, PlanCreateSerializer, ChapterAddPlanSerializer
 
 
 def get_tokens_for_user(user):
@@ -112,3 +112,19 @@ class ResourceCreateAPI(CreateAPIView):
    serializer_class = ResourceSerializer
    permission_classes = [IsAuthenticated]
    renderer_classes = [UserRenderer]
+
+
+class PlanListCreateAPI(ListCreateAPIView):
+    serializer_class = PlanCreateSerializer
+    renderer_classes = [UserRenderer]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+      return Plan.objects.all().filter(sectionyear=self.kwargs['id'])
+
+
+class PlanChapterCreateAPI(CreateAPIView):
+    queryset = PlanChapter.objects.all()
+    serializer_class = ChapterAddPlanSerializer
+    renderer_classes = [UserRenderer] 
+    permission_classes = [IsAuthenticated]

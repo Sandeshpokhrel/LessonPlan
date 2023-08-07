@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 
-from .views import  UserRegistrationView, UserLoginView, UserProfileView, SubjectListCreateAPI, SectionYearCreateAPI, ChapterTopicAPI, TopicCreateAPI, AssignmentCreateAPI, ResourceCreateAPI, SubjectDeleteAPI
+from .views import  UserRegistrationView, UserLoginView, UserProfileView, SubjectListCreateAPI, SectionYearCreateAPI, ChapterTopicAPI, TopicCreateAPI, AssignmentCreateAPI, ResourceCreateAPI, SubjectDeleteAPI, PlanListCreateAPI, PlanChapterCreateAPI
 
 
 
@@ -17,4 +17,6 @@ urlpatterns = [
     path('topics/', TopicCreateAPI.as_view()),
     path('assignments/', AssignmentCreateAPI.as_view()),
     path('resources/', ResourceCreateAPI.as_view()),
+    path('sections/<int:id>/plan/', PlanListCreateAPI.as_view()),
+    path('plan/chapter/', PlanChapterCreateAPI.as_view()),
 ]

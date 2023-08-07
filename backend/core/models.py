@@ -42,27 +42,11 @@ class Topic(models.Model):
 #plan
 class Plan(models.Model):
   plan_name = models.CharField(max_length=255)
-  chapter = models.ForeignKey(Chapter, on_delete=models.PROTECT)
   sectionyear = models.ForeignKey(SectionYear, on_delete=models.CASCADE)
 
   def __str__(self) -> str:
     return self.plan_name
 
-#test
-class Test(models.Model):
-  test_detail = models.CharField(max_length=255)
-  plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
-
-  def __str__(self) -> str:
-    return self.test_detail
-
-#activity
-class Activity(models.Model):
-  activity_detail = models.CharField(max_length=255)
-  plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
-
-  def __str__(self) -> str:
-    return self.activity_detail
 
 #assignment
 class Assignment(models.Model):
@@ -83,3 +67,46 @@ class Resource(models.Model):
 
   def __str__(self) -> str:
     return self.res_name
+
+
+# chapters in plan
+class PlanChapter(models.Model):
+  plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+  chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+
+
+# topics in Plan
+class PlanTopic(models.Model):
+  plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+  topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+
+
+# assignments in Plan
+class PlanAssignment(models.Model):
+  plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+  assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+
+
+# resources in Plan
+class PlanResource(models.Model):
+  plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+  resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
+
+
+#test
+class Test(models.Model):
+  test_detail = models.CharField(max_length=255)
+  plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+
+  def __str__(self) -> str:
+    return self.test_detail
+
+
+#activity
+class Activity(models.Model):
+  activity_detail = models.CharField(max_length=255)
+  plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+
+  def __str__(self) -> str:
+    return self.activity_detail
+

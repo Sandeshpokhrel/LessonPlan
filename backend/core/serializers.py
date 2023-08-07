@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import User, SectionYear, Subject, Topic, Chapter, Assignment, Resource
+from .models import User, SectionYear, Subject, Topic, Chapter, Assignment, Resource, Plan, PlanAssignment, PlanChapter, PlanTopic, PlanResource
 
 
 class UserRegisterationSerializer(serializers.ModelSerializer):
@@ -101,3 +101,18 @@ class TopicCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
         fields = ['id', 'topic_name', 'chapter']
+
+
+# serializer for adding Chapter in Plan
+class ChapterAddPlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlanChapter
+        fields = ['id','plan', 'chapter'] 
+
+
+# serializer for creating in plan
+class PlanCreateSerializer(serializers.ModelSerializer):
+    planchapter_set = ChapterAddPlanSerializer(many=True)
+    class Meta:
+        model = Plan
+        fields = ['id', 'plan_name', 'sectionyear']
