@@ -127,7 +127,7 @@ function SyllabusPop(props) {
           </p>
         </Modal.Header>
         <Modal.Body>
-          <div class="p-6 space-y-6">
+          {/* <div class="p-6 space-y-6">
             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" />
 
             <div class="grid grid-cols-3 ">
@@ -272,7 +272,160 @@ function SyllabusPop(props) {
 
               </div>
             </div>
-          </div>
+          </div> */}
+
+
+         <div class="p-6 space-y-6">
+            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" />
+
+            <div class="grid grid-cols-3 ">
+              <div>
+                {!hidec && (
+                  <div>
+                    <label htmlFor="chapter" className="">
+                      Chapter:{" "}
+                    </label>
+                    <br />
+                    <input
+                      type="text"
+                      placeholder="Chapters"
+                      width="10px"
+                      class="border-2 rounded p-1 border-slate-500"
+                      value={chapter}
+                      onChange={(e) => {
+                        setChapter(e.target.value);
+                      }}
+                    />
+                    <button
+                      data-modal-hide="large-modal"
+                      type="button"
+                      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      onClick={handleChapter}
+                    >
+                      Add
+                    </button>
+
+                    <ul class="list-none">
+                      <li>2-D geometry</li>
+
+                      <div class="grid ul">
+                        <ul class="list-disc">
+                          <li>line</li>
+                          <li>ellipse</li>
+                          <li>circle</li>
+                        </ul>
+                      </div>
+                    </ul>
+                  </div>
+                )}
+
+                {hidec && (
+                  <div>
+                    <label htmlFor="topics" className="">
+                      Topic:{" "}
+                    </label>
+                    <br />
+                    <input
+                      type="text"
+                      placeholder="Topics"
+                      width="10px"
+                      class="border-2 rounded p-1 border-slate-500"
+                      onChange={(e) => {
+                        setTopics(e.target.value);
+                      }}
+                    />
+
+                    <button
+                      data-modal-hide="large-modal"
+                      type="button"
+                      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      onClick={handleTopics}
+                    >
+                      Add
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Assignment"
+                    class="border-2 rounded p-1 border-slate-500"
+                    onChange={(e) => {
+                      setAssign(e.target.value);
+                    }}
+                  />
+
+                  <form action="/action_page.php" class="my-2">
+                    <input
+                      type="file"
+                      id="myFile"
+                      name="filename"
+                      placeholder="upload"
+                      onChange={handleFileChange}
+                    />
+                  </form>
+                </div>
+
+                <div class="">
+                  <button
+                    data-modal-hide="large-modal"
+                    type="button"
+                    class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    onClick={handleAssign}
+                  >
+                    Add
+                  </button>
+                </div>
+
+                <ul class="list-none my-2">
+                  <li>2-D geometry Assignment</li>
+                </ul>
+              </div>
+
+              <div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Resources"
+                    class="border-2 rounded p-1 border-slate-500"
+                    onChange={(e) => {
+                      setResource(e.target.value);
+                    }}
+                  />
+                  <form action="/action_page.php" class="my-2">
+                    <input
+                      type="file"
+                      id="myFile"
+                      name="filename"
+                      placeholder="upload"
+                      onChange={handleFileChangeR}
+                    />
+                  </form>
+                  <button
+                    data-modal-hide="large-modal"
+                    type="button"
+                    class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    onClick={handleResource}
+                  >
+                    Add
+                  </button>
+
+                  <ul class="list-none my-2">
+                  <li>2-D geometry Resources    </li>
+                </ul>
+                </div>
+
+              </div>
+            </div>
+          </div> 
+
+
+
+
+
         </Modal.Body>
       </Modal>
     </>
