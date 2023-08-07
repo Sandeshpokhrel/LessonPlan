@@ -70,6 +70,7 @@ class SubjectListCreateAPI(ListCreateAPIView):
 class SubjectDeleteAPI(DestroyAPIView):
     serializer_class = SubjectCreateSerializer
     queryset = Subject.objects.all()
+    permission_classes = [IsAuthenticated]
 
 
 class SectionYearCreateAPI(CreateAPIView):
@@ -91,6 +92,12 @@ class ChapterTopicAPI(ListCreateAPIView):
           return ChapterViewSerializer
         elif self.request.method == 'POST':
           return ChapterCreateSerializer
+
+
+class ChapterDeleteAPI(DestroyAPIView):
+    serializer_class = ChapterCreateSerializer
+    queryset = Chapter.objects.all()
+    permission_classes = [IsAuthenticated]
 
 
 class TopicCreateAPI(CreateAPIView):
