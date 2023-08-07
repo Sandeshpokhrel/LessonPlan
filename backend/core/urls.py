@@ -20,6 +20,6 @@ urlpatterns = [
     path('sections/<int:id>/plan/', PlanListCreateAPI.as_view()),
     path('plan/chapter/', PlanChapterCreateAPI.as_view()),
     path('plan/topic/', PlanTopicCreateAPI.as_view()),
-    path('plan/assigment/', PlanAssigmentCreateAPI.as_view()),
+    path('plan/assignment/', PlanAssigmentCreateAPI.as_view()),
     path('plan/resource/', PlanResouceCreateAPI.as_view()),
 ]

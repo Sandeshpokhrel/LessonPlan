@@ -78,18 +78,21 @@ class PlanChapter(models.Model):
 # topics in Plan
 class PlanTopic(models.Model):
   plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+  chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
   topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
 
 
 # assignments in Plan
 class PlanAssignment(models.Model):
   plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+  chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
   assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
 
 
 # resources in Plan
 class PlanResource(models.Model):
   plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+  chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
   resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
 
 
