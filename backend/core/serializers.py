@@ -110,9 +110,39 @@ class ChapterAddPlanSerializer(serializers.ModelSerializer):
         fields = ['id','plan', 'chapter'] 
 
 
+# serializer for adding Topic in Plan
+class TopicAddPlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlanTopic
+        fields = ['id','plan', 'topic'] 
+
+
+# serializer for adding assginment in Plan
+class AssignmentAddPlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlanAssignment
+        fields = ['id','plan', 'assignment'] 
+
+
+# serializer for adding Resources in Plan
+class ResourceAddPlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlanResource
+        fields = ['id','plan', 'resource'] 
+
+
 # serializer for creating in plan
 class PlanCreateSerializer(serializers.ModelSerializer):
-    planchapter_set = ChapterAddPlanSerializer(many=True)
     class Meta:
         model = Plan
         fields = ['id', 'plan_name', 'sectionyear']
+
+# serializer for viewing plan
+class PlanViewSerializer(serializers.ModelSerializer):
+    planchapter_set = ChapterAddPlanSerializer(many=True)
+    plantopic_set = TopicAddPlanSerializer(many=True)
+    planassignment_set = AssignmentAddPlanSerializer(many=True)
+    planresource_set = ResourceAddPlanSerializer(many=True)
+    class Meta:
+        model = Plan
+        fields = ['id', 'plan_name', 'sectionyear', 'planchapter_set', 'plantopic_set', 'planassignment_set','planresource_set']
