@@ -145,6 +145,7 @@ function SyllabusPop(props) {
 
   const handleClose = () =>{
     setShow(false);
+    setClicked(false);
     setClicked(true);
 
   }
