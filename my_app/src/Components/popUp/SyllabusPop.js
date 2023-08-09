@@ -91,7 +91,6 @@ function SyllabusPop(props) {
       );
       console.log(res);
       setErrMsg("successfully Added");
-      setTopics("");
       setClicked(true);
       setTopics('');
     } catch (err) {
@@ -137,7 +136,7 @@ function SyllabusPop(props) {
       });
       console.log(res);
       setErrMsg("successfully Added");
-      setAssign();
+      setResource();
     } catch (err) {
       setErrMsg("Cannot Add File. First Add Chapter");
     }
@@ -145,8 +144,8 @@ function SyllabusPop(props) {
 
   const handleClose = () =>{
     setShow(false);
-    setClicked(false);
-    setClicked(true);
+    props.setBool(false);
+    props.setBool(true);
 
   }
 
@@ -794,6 +793,11 @@ function SyllabusPop(props) {
 
 
     </Modal.Body>
+    <Modal.Footer>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
   </Modal>
   </>
   )

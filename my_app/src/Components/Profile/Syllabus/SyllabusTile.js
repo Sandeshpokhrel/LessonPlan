@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 const SyllabusTile = (props) => {
     const axiosPrivate = useAxiosPrivate();
     const [syllabus, setSyllabus] = useState();
-    const [bool, setBool] = useState(false);
     useEffect(()=>{
         let isMounted = true;
         const controller = new AbortController();
@@ -43,12 +42,12 @@ const SyllabusTile = (props) => {
             isMounted = false;
             controller.abort();
         }
-    },[bool]);
+    },[props.bool]);
     const handleDelete = async(e,id)=>{
-            setBool(false);
+            props.setBool(false);
             try{
                 const res = await axiosPrivate.delete(API_EP.CHAPTER + `${id}/`)
-                setBool(true);
+                props.setBool(true);
             }catch(err){
               console.error(err);
             }
