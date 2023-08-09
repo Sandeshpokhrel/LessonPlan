@@ -472,7 +472,9 @@ function SyllabusPop(props) {
         </Modal.Body>
       </Modal>
       </>
-    ) : ""
+    ) : (<Button variant="primary" onClick={() => setShow(true)}>
+    Add Syllabus
+  </Button>)
   );
 }
 
