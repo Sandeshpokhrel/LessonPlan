@@ -68,9 +68,9 @@ function SyllabusPop(props) {
       setCid(res.data.id);
       setChapter("");
       setHidec(true);
-      
       setErrMsg("successfully Added");
       setClicked(true);
+      setChapter('');
     } catch (err) {
       console.error(err);
     }
@@ -90,9 +90,10 @@ function SyllabusPop(props) {
         }
       );
       console.log(res);
-      setTopics("");
       setErrMsg("successfully Added");
+      setTopics("");
       setClicked(true);
+      setTopics('');
     } catch (err) {
       console.error(err);
     }
@@ -117,6 +118,7 @@ function SyllabusPop(props) {
       });
       console.log(res);
       setErrMsg("successfully Added");
+      setAssign();
     } catch (err) {
       setErrMsg("Cannot Add File. First Add Chapter");
     }
@@ -135,10 +137,17 @@ function SyllabusPop(props) {
       });
       console.log(res);
       setErrMsg("successfully Added");
+      setAssign();
     } catch (err) {
       setErrMsg("Cannot Add File. First Add Chapter");
     }
   };
+
+  const handleClose = () =>{
+    setShow(false);
+    setClicked(true);
+
+  }
 
   return (
     (cname && tname) ? (
@@ -470,6 +479,11 @@ function SyllabusPop(props) {
 
 
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
       </Modal>
       </>
     ) : (
