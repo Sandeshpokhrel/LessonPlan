@@ -16,8 +16,8 @@ function SyllabusPop(props) {
   const [assign, setAssign] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [resource, setResource] = useState("");
-  const [cname, setCname] = useState('');
-  const [tname, setTname] = useState([]);
+  const [cname, setCname] = useState();
+  const [tname, setTname] = useState();
   const [clicked, setClicked] = useState(false);
   useEffect(() => {
     setErrMsg("");
@@ -141,7 +141,8 @@ function SyllabusPop(props) {
   };
 
   return (
-    <>
+    (cname && tname) ? (
+      <>
       <Button variant="primary" onClick={() => setShow(true)}>
         Add Syllabus
       </Button>
@@ -470,7 +471,8 @@ function SyllabusPop(props) {
 
         </Modal.Body>
       </Modal>
-    </>
+      </>
+    ) : ""
   );
 }
 
