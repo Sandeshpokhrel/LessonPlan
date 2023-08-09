@@ -69,7 +69,7 @@ function SyllabusPop(props) {
       setChapter("");
       setHidec(true);
       
-      alert("successfully Added");
+      setErrMsg("successfully Added");
       setClicked(true);
     } catch (err) {
       console.error(err);
@@ -91,7 +91,7 @@ function SyllabusPop(props) {
       );
       console.log(res);
       setTopics("");
-      alert("successfully Added");
+      setErrMsg("successfully Added");
       setClicked(true);
     } catch (err) {
       console.error(err);
