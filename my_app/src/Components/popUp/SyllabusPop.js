@@ -16,12 +16,43 @@ function SyllabusPop(props) {
   const [assign, setAssign] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [resource, setResource] = useState("");
+  const [cname, setCname] = useState('');
+  const [tname, setTname] = useState([]);
+  const [clicked, setClicked] = useState(false);
   useEffect(() => {
     setErrMsg("");
   }, [chapter, topics, assign]);
 
+  useEffect(()=>{
+    let isMounted = true;
+    const controller = new AbortController();
+    const getSyllabus = async () =>{
+        try{    
+            const res = await axiosPrivate.get(`${API_EP.SECTIONS}${props.id}/chapters/`,{ signal: controller.signal});
+            console.log(res.data[res.data.length -1]);
+            if (res.data.length > 0) {
+                const latestChapter = res.data[res.data.length - 1];
+                isMounted && setCname(latestChapter.chapter_name);
+                isMounted && setTname(latestChapter.topic_set);
+            } else {
+                isMounted && setCname(res.data.chapter_name);
+                isMounted && setTname(res.data.topic_set);
+            }
+        }catch(err){
+            console.error(err);
+        }
+    }
+    
+    getSyllabus();
+    return() => {
+        isMounted = false;
+        controller.abort();
+    }
+},[clicked]);
+
   const handleChapter = async () => {
     console.log(props.id);
+    setClicked(false);
     try {
       const res = await axiosPrivate.post(
         `${API_EP.SECTIONS}${0}/chapters/`,
@@ -37,12 +68,15 @@ function SyllabusPop(props) {
       setCid(res.data.id);
       setChapter("");
       setHidec(true);
+      
       alert("successfully Added");
+      setClicked(true);
     } catch (err) {
       console.error(err);
     }
   };
   const handleTopics = async () => {
+    setClicked(false);
     console.log(cid);
     try {
       const res = await axiosPrivate.post(
@@ -58,6 +92,7 @@ function SyllabusPop(props) {
       console.log(res);
       setTopics("");
       alert("successfully Added");
+      setClicked(true);
     } catch (err) {
       console.error(err);
     }
@@ -305,17 +340,18 @@ function SyllabusPop(props) {
                       Add
                     </button>
 
-                    <ul class="list-none">
-                      <li>2-D geometry</li>
-
-                      <div class="grid ul">
+                        <ul class="list-none">
+                        <li>{cname}</li>
+                        <div class="grid ul">
                         <ul class="list-disc">
-                          <li>line</li>
-                          <li>ellipse</li>
-                          <li>circle</li>
+                            {tname.map((item)=>(
+                                <li>{item.topic_name}</li>
+                            ))}
                         </ul>
                       </div>
-                    </ul>
+                        </ul>
+                         
+
                   </div>
                 )}
 
@@ -343,6 +379,16 @@ function SyllabusPop(props) {
                     >
                       Add
                     </button>
+                    <ul class="list-none">
+                        <li>{cname}</li>
+                        <div class="grid ul">
+                        <ul class="list-disc">
+                            {tname.map((item)=>(
+                                <li>{item.topic_name}</li>
+                            ))}
+                        </ul>
+                      </div>
+                        </ul>
                   </div>
                 )}
               </div>
@@ -380,9 +426,6 @@ function SyllabusPop(props) {
                   </button>
                 </div>
 
-                <ul class="list-none my-2">
-                  <li>2-D geometry Assignment</li>
-                </ul>
               </div>
 
               <div>
@@ -413,9 +456,8 @@ function SyllabusPop(props) {
                     Add
                   </button>
 
-                  <ul class="list-none my-2">
-                  <li>2-D geometry Resources    </li>
-                </ul>
+                
+                  
                 </div>
 
               </div>
