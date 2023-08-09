@@ -90,9 +90,10 @@ function SyllabusPop(props) {
         }
       );
       console.log(res);
+      
       setErrMsg("successfully Added");
-      setClicked(true);
       setTopics('');
+      setClicked(true);
     } catch (err) {
       console.error(err);
     }
@@ -145,6 +146,7 @@ function SyllabusPop(props) {
   const handleClose = () =>{
     setShow(false);
     props.setBool(false);
+    setHidec(false);
     props.setBool(true);
 
   }
@@ -162,7 +164,7 @@ function SyllabusPop(props) {
         dialogClassName="custom-modal"
         aria-labelledby="example-custom-modal-styling-title"
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title id="example-custom-modal-styling-title">
             Syllabus
           </Modal.Title>
