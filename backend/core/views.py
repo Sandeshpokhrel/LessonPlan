@@ -9,7 +9,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from .renderers import UserRenderer
 from .models import Subject, SectionYear, Chapter, Topic, Assignment, Resource, Plan, PlanChapter, PlanAssignment, PlanResource, PlanTopic
-from .serializers import UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, ChapterCreateSerializer, TopicCreateSerializer, AssignmentSerializer, ResourceSerializer, PlanCreateSerializer, ChapterAddPlanSerializer
+from .serializers import UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, ChapterCreateSerializer, TopicCreateSerializer, AssignmentSerializer, ResourceSerializer, PlanCreateSerializer, ChapterAddPlanSerializer, TopicAddPlanSerializer, AssignmentAddPlanSerializer, ResourceAddPlanSerializer, PlanViewSerializer
 
 
 def get_tokens_for_user(user):
@@ -122,16 +122,42 @@ class ResourceCreateAPI(CreateAPIView):
 
 
 class PlanListCreateAPI(ListCreateAPIView):
-    serializer_class = PlanCreateSerializer
     renderer_classes = [UserRenderer]
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-      return Plan.objects.all().filter(sectionyear=self.kwargs['id'])
+      return Plan.objects.prefetch_related('planchapter_set', 'plantopic_set', 'planassignment_set', 'planresource_set').all().filter(sectionyear=self.kwargs['id'])
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+          return PlanCreateSerializer
+        elif self.request.method == 'GET':
+           return PlanViewSerializer
 
 
 class PlanChapterCreateAPI(CreateAPIView):
     queryset = PlanChapter.objects.all()
     serializer_class = ChapterAddPlanSerializer
+    renderer_classes = [UserRenderer] 
+    permission_classes = [IsAuthenticated]
+
+
+class PlanTopicCreateAPI(CreateAPIView):
+    queryset = PlanTopic.objects.all()
+    serializer_class = TopicAddPlanSerializer
+    renderer_classes = [UserRenderer] 
+    permission_classes = [IsAuthenticated]
+
+
+class PlanAssigmentCreateAPI(CreateAPIView):
+    queryset = PlanAssignment.objects.all()
+    serializer_class = AssignmentAddPlanSerializer
+    renderer_classes = [UserRenderer] 
+    permission_classes = [IsAuthenticated]
+    
+
+class PlanResouceCreateAPI(CreateAPIView):
+    queryset = PlanResource.objects.all()
+    serializer_class = ResourceAddPlanSerializer
     renderer_classes = [UserRenderer] 
     permission_classes = [IsAuthenticated]
