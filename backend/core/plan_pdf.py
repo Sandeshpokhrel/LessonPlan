@@ -128,7 +128,7 @@ def make_plan_table(full_plan, person_name, subject, section_year):
     # Build the PDF file with the table
     doc.build(elements)
 
-    return True
+    return pdf_file_path
 
 
 #main 
