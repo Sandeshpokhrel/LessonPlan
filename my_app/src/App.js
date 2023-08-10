@@ -8,6 +8,7 @@ import Layout from './Layout/layout';
 import RequireAuth from './packages/Auth/requireAuth';
 import Syllabus from './Components/Profile/Syllabus/Syllabus';
 import NavBar from './Components/NavBar/NavBar';
+import Plan from './Components/Profile/Plan/Plan';
 function App() {
   return (
     <Router>
@@ -20,6 +21,7 @@ function App() {
           <Route element = {<RequireAuth/>} >
           <Route element = {<Profile/>} path = "/Profile" />
           <Route element = {<Syllabus/>} path = "/syllabus"/>
+          <Route element = {<Plan/>} path = "/plan"/>
           </Route>
           
           {/* </Route> */}
