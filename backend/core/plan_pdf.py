@@ -6,6 +6,8 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle
 from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT, TA_CENTER, TA_RIGHT
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 
+from django.conf import settings
+
 
 #creating table element
 def create_custom_table(table_data, count_detail, elements):
@@ -87,8 +89,8 @@ def convert_list(dictionary):
 def make_plan_table(full_plan, person_name, subject, section_year):
     
     #path
-    pdf_name = f"../media/plan_pdf/{person_name} {subject} {section_year}"
-    pdf_file_path = f"./{pdf_name}.pdf"
+    pdf_name = f"{settings.BASE_DIR}/media/plan_pdf/{person_name} {subject} {section_year}"
+    pdf_file_path = f"{pdf_name}.pdf"
 
     doc = SimpleDocTemplate(pdf_file_path, pagesize=letter)
     elements = []
@@ -112,19 +114,27 @@ def make_plan_table(full_plan, person_name, subject, section_year):
         f"Weekly Plan of {subject} {section_year}",
         "\u00A0",
     ]
+
     for line in heading_lines:
         heading_paragraph = Paragraph(line, paragraph_styles["Normal_CENTER"])
         elements.append(heading_paragraph)
 
     
+
     #Create multiple tables for plan
     for dictionary in full_plan:
+
+        print(dictionary)
         list_plan = convert_list(dictionary)[0]
+
+        print("hello samip inside loop beg 1 ")
         count_detail = convert_list(dictionary)[1]
         create_custom_table(list_plan, count_detail, elements)
         elements.append(Paragraph("\u00A0", paragraph_styles["Normal_CENTER"]))
     
 
+
+    print("hello samip")
     # Build the PDF file with the table
     doc.build(elements)
 

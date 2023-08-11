@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate
-from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,6 +9,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .renderers import UserRenderer
 from .models import Subject, SectionYear, Chapter, Topic, Assignment, Resource, Plan, PlanChapter, PlanAssignment, PlanResource, PlanTopic
 from .serializers import UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, ChapterCreateSerializer, TopicCreateSerializer, AssignmentSerializer, ResourceSerializer, PlanCreateSerializer, ChapterAddPlanSerializer, TopicAddPlanSerializer, AssignmentAddPlanSerializer, ResourceAddPlanSerializer, PlanViewSerializer
+from .plan_pdf import make_plan_table
 
 
 def get_tokens_for_user(user):
@@ -161,3 +161,18 @@ class PlanResouceCreateAPI(CreateAPIView):
     serializer_class = ResourceAddPlanSerializer
     renderer_classes = [UserRenderer] 
     permission_classes = [IsAuthenticated]
+
+
+  
+class PlanPdfView(APIView):
+    permission_classes = [IsAuthenticated]
+    renderer_classes = [UserRenderer]
+
+    def get(self, request, id, format=None):
+        data = Plan.objects.prefetch_related('planchapter_set', 'plantopic_set', 'planassignment_set', 'planresource_set').all().filter(sectionyear=self.kwargs['id'])
+        serializer = PlanViewSerializer(data, many=True)
+        print(serializer.data)
+ 
+        filepath = make_plan_table(serializer.data, "Samip Don", "Mathematics","BCT 3rd Year")
+
+        return Response({"file":filepath}, status=status.HTTP_201_CREATED)
