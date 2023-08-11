@@ -68,19 +68,37 @@ def convert_list(dictionary):
     topic_count = len(dictionary["plantopic_set"])
     plan_data.append(["COURSE", "Chapter", "Topic"])
     for topic in dictionary["plantopic_set"]:
-        plan_data.append(["", str(topic["chapter"]),  topic["topic"]["topic_name"]])
+
+        for chapter in dictionary["planchapter_set"]:
+            chapter_name = None
+            if chapter["chapter"]["id"] == topic["chapter"]:
+                chapter_name = chapter["chapter"]["chapter_name"]
+
+        plan_data.append(["", chapter_name,  topic["topic"]["topic_name"]])
         
     #for assignment
     assignment_count = len(dictionary["planassignment_set"])
     plan_data.append(["ASSIGNMENTS", "Chapter", "Assignment"])
     for assignment in dictionary["planassignment_set"]:
-        plan_data.append(["", str(assignment["chapter"]),  assignment["assignment"]["assign_name"]])
+
+        for chapter in dictionary["planchapter_set"]:
+            chapter_name = None
+            if chapter["chapter"]["id"] == assignment["chapter"]:
+                chapter_name = chapter["chapter"]["chapter_name"]
+
+        plan_data.append(["", chapter_name,  assignment["assignment"]["assign_name"]])
 
     #for resource
     resource_count = len(dictionary["planresource_set"])
     plan_data.append(["RESOURCE", "Chapter", "Resource"])
     for resource in dictionary["planresource_set"]:
-        plan_data.append(["", str(resource["chapter"]),  resource["resource"]["res_name"]])
+
+        for chapter in dictionary["planchapter_set"]:
+            chapter_name = None
+            if chapter["chapter"]["id"] == resource["chapter"]:
+                chapter_name = chapter["chapter"]["chapter_name"]
+
+        plan_data.append(["", chapter_name,  resource["resource"]["res_name"]])
 
     return [plan_data, [topic_count, assignment_count, resource_count]]
 
@@ -90,6 +108,7 @@ def make_plan_table(full_plan, person_name, subject, section_year):
     
     #path
     pdf_name = f"{settings.BASE_DIR}/media/plan_pdf/{person_name} {subject} {section_year}"
+    #pdf_name = f"../media/plan_pdf/{person_name} {subject} {section_year}"
     pdf_file_path = f"{pdf_name}.pdf"
 
     doc = SimpleDocTemplate(pdf_file_path, pagesize=letter)
@@ -124,17 +143,12 @@ def make_plan_table(full_plan, person_name, subject, section_year):
     #Create multiple tables for plan
     for dictionary in full_plan:
 
-        print(dictionary)
         list_plan = convert_list(dictionary)[0]
-
-        print("hello samip inside loop beg 1 ")
         count_detail = convert_list(dictionary)[1]
         create_custom_table(list_plan, count_detail, elements)
         elements.append(Paragraph("\u00A0", paragraph_styles["Normal_CENTER"]))
     
 
-
-    print("hello samip")
     # Build the PDF file with the table
     doc.build(elements)
 
@@ -145,105 +159,55 @@ def make_plan_table(full_plan, person_name, subject, section_year):
 #person_name  = "Samip Neupane"
 #subject = "COA"
 #section_year = "BCT-3rd year"
+
 """ full_plan = [
-{
-    "id": 1,
-    "plan_name": "week 1",
-    "sectionyear": 1,
-
-    "plantopic_set": [
-        {
-            "chapter": 1,
-        
-            "topic": {
-                "id": 1,
-                "topic_name": "Memory"
+    {
+        "id": 1,
+        "plan_name": "week 1",
+        "sectionyear": 1,
+        "planchapter_set": [
+            {
+                "chapter": {
+                    "id": 1,
+                    "chapter_name": "Introduction"
+                }
             }
-        },
-        {
-            "chapter": 1,
-            "topic": {
-                "id": 2,
-                "topic_name": "Time complexity"
+        ],
+        "plantopic_set": [
+            {
+                "chapter": 1,
+                "topic": {
+                    "id": 1,
+                    "topic_name": "Memory"
+                }
+            },
+            {
+                "chapter": 1,
+                "topic": {
+                    "id": 2,
+                    "topic_name": "Time complexity"
+                }
             }
-        }
-    ],
-    "planassignment_set": [
-        {
-            "chapter": 1,
-            "assignment": {
-                "id": 1,
-                "assign_name": "Assignment 1"
+        ],
+        "planassignment_set": [
+            {
+                "chapter": 1,
+                "assignment": {
+                    "id": 1,
+                    "assign_name": "Assignment 1"
+                }
             }
-        }
-    ],
-    "planresource_set": [
-        {
-            "chapter": 1,
-            "resource": {
-                "id": 1,
-                "res_name": "Class Notes"
+        ],
+        "planresource_set": [
+            {
+                "chapter": 1,
+                "resource": {
+                    "id": 1,
+                    "res_name": "Class Notes"
+                }
             }
-        }
-    ]
-},
-
-{
-    "id": 1,
-    "plan_name": "week 2",
-    "sectionyear": 1,
-    "plantopic_set": [
-        {
-            "chapter": 7,
-            "topic": {
-                "id": 1,
-                "topic_name": "Memory and its types"
-            }
-        },
-        {
-            "chapter": 69,
-            "topic": {
-                "id": 2,
-                "topic_name": "Time complexity, time is very very complex dude...."
-            }
-        }
-    ],
-    "planassignment_set": [
-        {
-            "chapter": 420,
-            "assignment": {
-                "id": 36,
-                "assign_name": "budale dherai assignment diyo"
-            }
-        },
-        {
-            "chapter": 69696,
-            "assignment": {
-                "id": 44,
-                "assign_name": "feri assignment diyo"
-            }
-        }
-    ],
-    "planresource_set": [
-        {
-            "chapter": 78,
-            "resource": {
-                "id": 1,
-                "res_name": "Class Notes hya feri note lekhayo"
-            }
-        },
-        {
-            "chapter": 44,
-            "resource": {
-                "id": 9,
-                "res_name": "ghanti lagna lagyo, still note"
-            }
-        }
-    ]
-}
-
-]
-"""
+        ]
+    }
+]"""
 
 #make_plan_table(full_plan, person_name, subject, section_year)
-#return -> True
