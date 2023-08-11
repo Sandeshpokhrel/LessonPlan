@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import ListCreateAPIView, CreateAPIView, DestroyAPIView 
+from rest_framework.generics import ListCreateAPIView, CreateAPIView, DestroyAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -176,3 +176,22 @@ class PlanPdfView(APIView):
         filepath = make_plan_table(serializer.data, "Samip Don", "Mathematics","BCT 3rd Year")
 
         return Response({"file":filepath}, status=status.HTTP_201_CREATED)
+
+
+
+class AssignmentListViewAPI(ListAPIView):
+    serializer_class = AssignmentSerializer
+    permission_classes = [IsAuthenticated]
+    renderer_classes = [UserRenderer]
+
+    def get_queryset(self):
+       return Assignment.objects.select_related('chapter').filter(chapter__section_year=self.kwargs['id'])
+
+
+class ResourceListViewAPI(ListAPIView):
+    serializer_class = ResourceSerializer
+    permission_classes = [IsAuthenticated]
+    renderer_classes = [UserRenderer]
+
+    def get_queryset(self):
+       return Resource.objects.select_related('chapter').filter(chapter__section_year=self.kwargs['id'])
