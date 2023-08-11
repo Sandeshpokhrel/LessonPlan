@@ -25,6 +25,8 @@ function NavBar(props) {
               <Nav.Link as={Link} to="/syllabus" state = {{section}}>Syllabus</Nav.Link> 
               <Nav.Link as={Link} to="/assignments">Assignments</Nav.Link> 
               <Nav.Link as={Link} to="/resources">Resources</Nav.Link> 
+              <Nav.Link as={Link} to="/plan" state = {{section}}>Plan</Nav.Link> 
+
               <span style ={spanStyle}>
               {section}
               </span>
