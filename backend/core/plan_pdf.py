@@ -73,6 +73,7 @@ def convert_list(dictionary):
             chapter_name = None
             if chapter["chapter"]["id"] == topic["chapter"]:
                 chapter_name = chapter["chapter"]["chapter_name"]
+                break
 
         plan_data.append(["", chapter_name,  topic["topic"]["topic_name"]])
         
@@ -85,6 +86,7 @@ def convert_list(dictionary):
             chapter_name = None
             if chapter["chapter"]["id"] == assignment["chapter"]:
                 chapter_name = chapter["chapter"]["chapter_name"]
+                break
 
         plan_data.append(["", chapter_name,  assignment["assignment"]["assign_name"]])
 
@@ -97,6 +99,7 @@ def convert_list(dictionary):
             chapter_name = None
             if chapter["chapter"]["id"] == resource["chapter"]:
                 chapter_name = chapter["chapter"]["chapter_name"]
+                break
 
         plan_data.append(["", chapter_name,  resource["resource"]["res_name"]])
 
@@ -171,6 +174,18 @@ def make_plan_table(full_plan, person_name, subject, section_year):
                     "id": 1,
                     "chapter_name": "Introduction"
                 }
+            },
+            {
+                "chapter": {
+                    "id": 3,
+                    "chapter_name": "Hello"
+                }
+            },
+            {
+                "chapter": {
+                    "id": 2,
+                    "chapter_name": "Hi"
+                }
             }
         ],
         "plantopic_set": [
@@ -182,7 +197,7 @@ def make_plan_table(full_plan, person_name, subject, section_year):
                 }
             },
             {
-                "chapter": 1,
+                "chapter": 2,
                 "topic": {
                     "id": 2,
                     "topic_name": "Time complexity"
@@ -191,12 +206,20 @@ def make_plan_table(full_plan, person_name, subject, section_year):
         ],
         "planassignment_set": [
             {
-                "chapter": 1,
+                "chapter": 3,
                 "assignment": {
                     "id": 1,
                     "assign_name": "Assignment 1"
                 }
+            },
+            {
+                "chapter": 1,
+                "assignment": {
+                    "id": 1,
+                    "assign_name": "Assignment hello"
+                }
             }
+
         ],
         "planresource_set": [
             {
@@ -205,9 +228,16 @@ def make_plan_table(full_plan, person_name, subject, section_year):
                     "id": 1,
                     "res_name": "Class Notes"
                 }
+            },
+            {
+                "chapter": 2,
+                "resource": {
+                    "id": 1,
+                    "res_name": "resource sth"
+                }
             }
         ]
     }
-]"""
-
+]
+"""
 #make_plan_table(full_plan, person_name, subject, section_year)
