@@ -188,7 +188,7 @@ class ResourceViewPlanSerializer(serializers.ModelSerializer):
 class PlanCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plan
-        fields = ['plan_name', 'sectionyear']
+        fields = ['id', 'plan_name', 'sectionyear']
 
 # serializer for viewing plan
 class PlanViewSerializer(serializers.ModelSerializer):
