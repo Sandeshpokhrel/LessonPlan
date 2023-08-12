@@ -62,46 +62,27 @@ def create_custom_table(table_data, count_detail, elements):
 #converting each week dictionary into list with count
 def convert_list(dictionary):
     plan_data = []
+   
+    #title of plan
     plan_data.append(["Plan: " + dictionary["plan_name"], "", ""])
 
     #for course
     topic_count = len(dictionary["plantopic_set"])
     plan_data.append(["COURSE", "Chapter", "Topic"])
     for topic in dictionary["plantopic_set"]:
-
-        for chapter in dictionary["planchapter_set"]:
-            chapter_name = None
-            if chapter["chapter"]["id"] == topic["chapter"]:
-                chapter_name = chapter["chapter"]["chapter_name"]
-                break
-
-        plan_data.append(["", chapter_name,  topic["topic"]["topic_name"]])
+        plan_data.append(["", topic["chapter"]["chapter_name"],  topic["topic"]["topic_name"]])
         
     #for assignment
     assignment_count = len(dictionary["planassignment_set"])
     plan_data.append(["ASSIGNMENTS", "Chapter", "Assignment"])
     for assignment in dictionary["planassignment_set"]:
-
-        for chapter in dictionary["planchapter_set"]:
-            chapter_name = None
-            if chapter["chapter"]["id"] == assignment["chapter"]:
-                chapter_name = chapter["chapter"]["chapter_name"]
-                break
-
-        plan_data.append(["", chapter_name,  assignment["assignment"]["assign_name"]])
+        plan_data.append(["", assignment["chapter"]["chapter_name"],  assignment["assignment"]["assign_name"]])
 
     #for resource
     resource_count = len(dictionary["planresource_set"])
     plan_data.append(["RESOURCE", "Chapter", "Resource"])
     for resource in dictionary["planresource_set"]:
-
-        for chapter in dictionary["planchapter_set"]:
-            chapter_name = None
-            if chapter["chapter"]["id"] == resource["chapter"]:
-                chapter_name = chapter["chapter"]["chapter_name"]
-                break
-
-        plan_data.append(["", chapter_name,  resource["resource"]["res_name"]])
+        plan_data.append(["", resource["chapter"]["chapter_name"],  resource["resource"]["res_name"]])
 
     return [plan_data, [topic_count, assignment_count, resource_count]]
 
@@ -159,45 +140,40 @@ def make_plan_table(full_plan, person_name, subject, section_year):
 
 
 #main 
-#person_name  = "Samip Neupane"
-#subject = "COA"
-#section_year = "BCT-3rd year"
-
-""" full_plan = [
+person_name  = "Samip Neupane"
+subject = "COA"
+section_year = "BCT-3rd year"
+full_plan = [
     {
         "id": 1,
         "plan_name": "week 1",
         "sectionyear": 1,
-        "planchapter_set": [
+        "plantopic_set": [
             {
                 "chapter": {
                     "id": 1,
                     "chapter_name": "Introduction"
-                }
-            },
-            {
-                "chapter": {
-                    "id": 3,
-                    "chapter_name": "Hello"
-                }
-            },
-            {
-                "chapter": {
-                    "id": 2,
-                    "chapter_name": "Hi"
-                }
-            }
-        ],
-        "plantopic_set": [
-            {
-                "chapter": 1,
+                },
                 "topic": {
                     "id": 1,
                     "topic_name": "Memory"
                 }
             },
             {
-                "chapter": 2,
+                "chapter": {
+                    "id": 1,
+                    "chapter_name": "Introduction"
+                },
+                "topic": {
+                    "id": 2,
+                    "topic_name": "Time complexity"
+                }
+            },
+            {
+                "chapter": {
+                    "id": 4,
+                    "chapter_name": "Array"
+                },
                 "topic": {
                     "id": 2,
                     "topic_name": "Time complexity"
@@ -206,38 +182,36 @@ def make_plan_table(full_plan, person_name, subject, section_year):
         ],
         "planassignment_set": [
             {
-                "chapter": 3,
+                "chapter": {
+                    "id": 1,
+                    "chapter_name": "Introduction"
+                },
                 "assignment": {
                     "id": 1,
                     "assign_name": "Assignment 1"
                 }
-            },
-            {
-                "chapter": 1,
-                "assignment": {
-                    "id": 1,
-                    "assign_name": "Assignment hello"
-                }
             }
-
         ],
         "planresource_set": [
             {
-                "chapter": 1,
+                "chapter": {
+                    "id": 1,
+                    "chapter_name": "Introduction"
+                },
                 "resource": {
                     "id": 1,
                     "res_name": "Class Notes"
                 }
-            },
-            {
-                "chapter": 2,
-                "resource": {
-                    "id": 1,
-                    "res_name": "resource sth"
-                }
             }
         ]
+    },
+    {
+        "id": 2,
+        "plan_name": "week 1",
+        "sectionyear": 1,
+        "plantopic_set": [],
+        "planassignment_set": [],
+        "planresource_set": []
     }
 ]
-"""
 #make_plan_table(full_plan, person_name, subject, section_year)
