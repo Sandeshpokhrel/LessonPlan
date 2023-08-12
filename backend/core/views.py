@@ -174,9 +174,8 @@ class PlanPdfView(APIView):
     renderer_classes = [UserRenderer]
 
     def get(self, request, id, format=None):
-        data = Plan.objects.prefetch_related('planchapter_set', 'plantopic_set', 'planassignment_set', 'planresource_set').all().filter(sectionyear=self.kwargs['id'])
+        data = Plan.objects.prefetch_related('plantopic_set', 'planassignment_set', 'planresource_set').all().filter(sectionyear=self.kwargs['id'])
         serializer = PlanViewSerializer(data, many=True)
-        print(serializer.data)
  
         filepath = make_plan_table(serializer.data, "Samip Don", "Mathematics","BCT 3rd Year")
 
