@@ -134,6 +134,11 @@ class PlanListCreateAPI(ListCreateAPIView):
         elif self.request.method == 'GET':
            return PlanViewSerializer
 
+class PlanDeleteAPI(DestroyAPIView):
+    queryset = Plan.objects.all()
+    serializer_class = PlanCreateSerializer
+    permission_classes = [IsAuthenticated]
+
 
 # class PlanChapterCreateAPI(CreateAPIView):
 #     queryset = PlanChapter.objects.all()
