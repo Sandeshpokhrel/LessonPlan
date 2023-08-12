@@ -69,10 +69,10 @@ class Resource(models.Model):
     return self.res_name
 
 
-# chapters in plan
-class PlanChapter(models.Model):
-  plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
-  chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+# # chapters in plan
+# class PlanChapter(models.Model):
+#   plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+#   chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
 
 
 # topics in Plan

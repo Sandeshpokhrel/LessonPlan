@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import User, SectionYear, Subject, Topic, Chapter, Assignment, Resource, Plan, PlanAssignment, PlanChapter, PlanTopic, PlanResource
+from .models import User, SectionYear, Subject, Topic, Chapter, Assignment, Resource, Plan, PlanAssignment, PlanTopic, PlanResource
 
 
 class UserRegisterationSerializer(serializers.ModelSerializer):
@@ -127,16 +127,16 @@ class ResourceOnlyViewPlanSerializer(serializers.ModelSerializer):
 
 
 # serializer for adding Chapter in Plan
-class ChapterAddPlanSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PlanChapter
-        fields = ['plan', 'chapter'] 
+# class ChapterAddPlanSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = PlanChapter
+#         fields = ['plan', 'chapter'] 
 
-class ChapterViewPlanSerializer(serializers.ModelSerializer):
-    chapter = ChapterOnlyViewPlanSerializer()
-    class Meta:
-        model = PlanChapter
-        fields = ['chapter']
+# class ChapterViewPlanSerializer(serializers.ModelSerializer):
+#     chapter = ChapterOnlyViewPlanSerializer()
+#     class Meta:
+#         model = PlanChapter
+#         fields = ['chapter']
 
 
 # serializer for adding Topic in Plan
@@ -148,6 +148,7 @@ class TopicAddPlanSerializer(serializers.ModelSerializer):
 
 class TopicViewPlanSerializer(serializers.ModelSerializer):
     topic = TopicOnlyViewPlanSerializer()
+    chapter = ChapterOnlyViewPlanSerializer()
     class Meta:
         model = PlanTopic
         fields = ['chapter', 'topic']
@@ -162,6 +163,7 @@ class AssignmentAddPlanSerializer(serializers.ModelSerializer):
 
 class AssignmentViewPlanSerializer(serializers.ModelSerializer):
     assignment = AssignmentOnlyViewPlanSerializer()
+    chapter = ChapterOnlyViewPlanSerializer()
     class Meta:
         model = PlanAssignment
         fields = ['chapter','assignment']
@@ -176,6 +178,7 @@ class ResourceAddPlanSerializer(serializers.ModelSerializer):
 
 class ResourceViewPlanSerializer(serializers.ModelSerializer):
     resource = ResourceOnlyViewPlanSerializer()
+    chapter = ChapterOnlyViewPlanSerializer()
     class Meta:
         model = PlanResource
         fields = ['chapter','resource']
@@ -189,10 +192,9 @@ class PlanCreateSerializer(serializers.ModelSerializer):
 
 # serializer for viewing plan
 class PlanViewSerializer(serializers.ModelSerializer):
-    planchapter_set = ChapterViewPlanSerializer(many=True)
     plantopic_set = TopicViewPlanSerializer(many=True)
     planassignment_set = AssignmentViewPlanSerializer(many=True)
     planresource_set = ResourceViewPlanSerializer(many=True)
     class Meta:
         model = Plan
-        fields = ['id', 'plan_name', 'sectionyear', 'planchapter_set', 'plantopic_set', 'planassignment_set','planresource_set']
+        fields = ['id', 'plan_name', 'sectionyear', 'plantopic_set', 'planassignment_set','planresource_set']
