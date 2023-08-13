@@ -8,7 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from .renderers import UserRenderer
 from .models import Subject, SectionYear, Chapter, Topic, Assignment, Resource, Plan, PlanAssignment, PlanResource, PlanTopic
-from .serializers import ChapterCreateSerializer, UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, TopicCreateSerializer, AssignmentSerializer, ResourceSerializer, PlanCreateSerializer, TopicAddPlanSerializer, AssignmentAddPlanSerializer, ResourceAddPlanSerializer, PlanViewSerializer
+from .serializers import ChapterCreateSerializer, UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, TopicCreateSerializer, AssignmentSerializer, ResourceSerializer, PlanCreateSerializer, TopicAddPlanSerializer, AssignmentAddPlanSerializer, ResourceAddPlanSerializer, PlanViewSerializer, AssignmentListSerializer, ResourceListSerializer
 from .plan_pdf import make_plan_table
 
 
@@ -184,7 +184,7 @@ class PlanPdfView(APIView):
 
 
 class AssignmentListViewAPI(ListAPIView):
-    serializer_class = AssignmentSerializer
+    serializer_class = AssignmentListSerializer
     permission_classes = [IsAuthenticated]
     renderer_classes = [UserRenderer]
 
@@ -193,7 +193,7 @@ class AssignmentListViewAPI(ListAPIView):
 
 
 class ResourceListViewAPI(ListAPIView):
-    serializer_class = ResourceSerializer
+    serializer_class = ResourceListSerializer
     permission_classes = [IsAuthenticated]
     renderer_classes = [UserRenderer]
 

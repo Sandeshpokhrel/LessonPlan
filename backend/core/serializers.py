@@ -198,3 +198,18 @@ class PlanViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plan
         fields = ['id', 'plan_name', 'sectionyear', 'plantopic_set', 'planassignment_set','planresource_set']
+
+
+
+class AssignmentListSerializer(serializers.ModelSerializer):
+    chapter = ChapterOnlyViewPlanSerializer()
+    class Meta:
+        model = Assignment
+        fields = ['chapter', 'assign_name', 'file']
+
+
+class ResourceListSerializer(serializers.ModelSerializer):
+    chapter = ChapterOnlyViewPlanSerializer()
+    class Meta:
+        model = Resource
+        fields = ['chapter', 'res_name', 'file']
