@@ -211,5 +211,5 @@ class AssignmentListSerializer(serializers.ModelSerializer):
 class ResourceListSerializer(serializers.ModelSerializer):
     resource_set = ResourceSerializer(many=True)
     class Meta:
-        model = Resource
+        model = Chapter 
         fields = ['id','chapter_name', 'resource_set']
