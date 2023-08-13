@@ -9,6 +9,9 @@ class API_EP{
     static RESOURCES = '/resources/';
     static TOPICS = '/topics/';
     static CHAPTER = '/chapter/';
+    static PLAN = '/plan/';
+    static ASSIGN = '/assignment/';
+    static RES = '/resource/'
 
 }
 export default API_EP;

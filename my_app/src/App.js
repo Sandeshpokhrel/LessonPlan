@@ -9,6 +9,8 @@ import RequireAuth from './packages/Auth/requireAuth';
 import Syllabus from './Components/Profile/Syllabus/Syllabus';
 import NavBar from './Components/NavBar/NavBar';
 import Plan from './Components/Profile/Plan/Plan';
+import Assignments from './Components/Profile/Assignments/Assignments';
+import Resources from './Components/Profile/Resources/Resources';
 function App() {
   return (
     <Router>
@@ -22,6 +24,8 @@ function App() {
           <Route element = {<Profile/>} path = "/Profile" />
           <Route element = {<Syllabus/>} path = "/syllabus"/>
           <Route element = {<Plan/>} path = "/plan"/>
+          <Route element = {<Assignments/>} path = "/assignments"/>
+          <Route element = {<Resources/>} path = "/resources"/>
           </Route>
           
           {/* </Route> */}

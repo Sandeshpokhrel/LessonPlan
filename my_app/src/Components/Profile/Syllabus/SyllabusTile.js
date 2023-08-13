@@ -52,6 +52,10 @@ const SyllabusTile = (props) => {
               console.error(err);
             }
           }
+    const handleRedirect = (url) =>{
+            window.open(url, "_blank");
+        
+    }
     
   return (
     syllabus ? (
@@ -62,8 +66,59 @@ const SyllabusTile = (props) => {
           <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm" onClick={(e)=>handleDelete(e,item.id)}>
             Delete entry 
         </button>
+                <div class="grid justify-center mt-6">
+        <table class="table-fixed border-collapse border border-slate-400">
+            <tr class="border border-slate-500 px-20 ">
+            <th class="bg-slate-400 px-80"  colspan="3">{item.chapter_name} </th>
+            </tr>
+            
+            <tr>
+            <td  class="border border-slate-500 pl-4  bg-slate-200" rowspan={item.topic_set.length}>Topics</td>
+            <td  class="border border-slate-500 px-20" colspan="2">{item.topic_set[0].topic_name}</td>
+            </tr>
+            {item.topic_set.slice(1).map((nitem)=>(
+                <tr>
+                <td  class="border border-slate-500 px-20 " colspan="2">{nitem.topic_name}</td>
+                </tr>
+            ))}
+            
+                {item.assignment_set.length ? (
+                    <>
+                  <tr>
+                  <td  class="border border-slate-500 pl-4  bg-slate-200" rowspan={item.assignment_set.length}>Assignments</td>
+                  <td  class="border border-slate-500 px-20 ">{item.assignment_set[0].assign_name}</td>
+                  <td  class="border border-slate-500 px-20 "><button class="border-2 rounded border-slate-500 px-1 bg-blue-300 text-sm " onClick={()=>handleRedirect(item.assignment_set[0].file)}>View</button></td>
+                  </tr>
+                  {item.assignment_set.slice(1).map((nitem)=>(
+                      <tr>
+                      <td  class="border border-slate-500 px-20 ">{nitem.assign_name}</td>
+                      <td  class="border border-slate-500 px-20 "><button class="border-2 rounded border-slate-500 px-1 bg-blue-300 text-sm "onClick={()=>handleRedirect(nitem.file)}>View</button></td>
+                      </tr>
+                  ))}  
+                  </>
+                ) : ""}
+            
+            {item.resource_set.length ? (
+                <>
+                <tr>
+            <td  class="border border-slate-500 pl-4  bg-slate-200" rowspan={item.resource_set.length}>Resources</td>
+            <td  class="border border-slate-500 px-20 ">{item.resource_set[0].res_name}</td>
+            <td  class="border border-slate-500 px-20 "><button class="border-2 rounded border-slate-500 px-1 bg-blue-300 text-sm "onClick={()=>handleRedirect(item.resource_set[0].file)}>View</button></td>
+            </tr>
+            {item.resource_set.slice(1).map((nitem)=>(
+                <tr>
+                <td  class="border border-slate-500 px-20 ">{nitem.res_name}</td>
+                <td  class="border border-slate-500 px-20 "><button class="border-2 rounded border-slate-500 px-1 bg-blue-300 text-sm " onClick={()=>handleRedirect(nitem.file)}>View</button></td>
+                </tr>
+            ))}
+                </>
+            ) : ""}
+            
+            
+        </table>
         </div>
-              <div class="grid grid-cols-3 px-10 py-4">
+        </div>
+              {/* <div class="grid grid-cols-3 px-10 py-4">
             
                 <div>
                   <ul class="list-none">
@@ -88,7 +143,7 @@ const SyllabusTile = (props) => {
                         <div>
                         {nesteditem.assign_name}
                         <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm">
-                            Download
+                            View
                         </button>
                     </div>
                     ))}
@@ -99,14 +154,15 @@ const SyllabusTile = (props) => {
                 <div>
                 {item.resource_set.map((nesteditem)=>(
                             <div>
+                                {nesteditem.res_name}
                             <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm">
-                                Download
+                                View
                             </button>
                 </div> 
                         ))}
                   
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
       )) 
