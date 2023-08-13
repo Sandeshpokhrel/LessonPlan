@@ -189,7 +189,7 @@ class AssignmentListViewAPI(ListAPIView):
     renderer_classes = [UserRenderer]
 
     def get_queryset(self):
-       return Assignment.objects.select_related('chapter').filter(chapter__section_year=self.kwargs['id'])
+       return Chapter.objects.prefetch_related('assignment_set').filter(section_year=self.kwargs['id'])
 
 
 class ResourceListViewAPI(ListAPIView):
@@ -198,4 +198,4 @@ class ResourceListViewAPI(ListAPIView):
     renderer_classes = [UserRenderer]
 
     def get_queryset(self):
-       return Resource.objects.select_related('chapter').filter(chapter__section_year=self.kwargs['id'])
+       return Chapter.objects.prefetch_related('resource_set').filter(section_year=self.kwargs['id'])

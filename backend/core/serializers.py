@@ -202,14 +202,14 @@ class PlanViewSerializer(serializers.ModelSerializer):
 
 
 class AssignmentListSerializer(serializers.ModelSerializer):
-    chapter = ChapterOnlyViewPlanSerializer()
+    assignment_set = AssignmentSerializer(many=True)
     class Meta:
-        model = Assignment
-        fields = ['chapter', 'assign_name', 'file']
+        model = Chapter
+        fields = ['id','chapter_name', 'assignment_set']
 
 
 class ResourceListSerializer(serializers.ModelSerializer):
-    chapter = ChapterOnlyViewPlanSerializer()
+    resource_set = ResourceSerializer(many=True)
     class Meta:
         model = Resource
-        fields = ['chapter', 'res_name', 'file']
+        fields = ['id','chapter_name', 'resource_set']
