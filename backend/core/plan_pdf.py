@@ -95,6 +95,9 @@ def make_plan_table(full_plan, person_name, subject, section_year):
     #pdf_name = f"../media/plan_pdf/{person_name} {subject} {section_year}"
     pdf_file_path = f"{pdf_name}.pdf"
 
+    path_to_return = f"/media/plan_pdf/{person_name} {subject} {section_year}"
+    pdf_path_to_return = f"{path_to_return}.pdf"
+
     doc = SimpleDocTemplate(pdf_file_path, pagesize=letter)
     elements = []
 
@@ -136,7 +139,7 @@ def make_plan_table(full_plan, person_name, subject, section_year):
     # Build the PDF file with the table
     doc.build(elements)
 
-    return pdf_file_path
+    return pdf_path_to_return 
 
 
 #main 

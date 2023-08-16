@@ -7,8 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .renderers import UserRenderer
-from .models import Subject, SectionYear, Chapter, Topic, Assignment, Resource, Plan, PlanAssignment, PlanResource, PlanTopic
-from .serializers import ChapterCreateSerializer, UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, TopicCreateSerializer, AssignmentSerializer, ResourceSerializer, PlanCreateSerializer, TopicAddPlanSerializer, AssignmentAddPlanSerializer, ResourceAddPlanSerializer, PlanViewSerializer, AssignmentListSerializer, ResourceListSerializer
+from .models import User, Subject, SectionYear, Chapter, Topic, Assignment, Resource, Plan, PlanAssignment, PlanResource, PlanTopic
+from .serializers import ChapterCreateSerializer, UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, TopicCreateSerializer, AssignmentSerializer, ResourceSerializer, PlanCreateSerializer, TopicAddPlanSerializer, AssignmentAddPlanSerializer, ResourceAddPlanSerializer, PlanViewSerializer, AssignmentListSerializer, ResourceListSerializer 
 from .plan_pdf import make_plan_table
 
 
@@ -176,10 +176,15 @@ class PlanPdfView(APIView):
     def get(self, request, id, format=None):
         data = Plan.objects.prefetch_related('plantopic_set', 'planassignment_set', 'planresource_set').all().filter(sectionyear=self.kwargs['id'])
         serializer = PlanViewSerializer(data, many=True)
- 
-        filepath = make_plan_table(serializer.data, "Samip Don", "Mathematics","BCT 3rd Year")
 
-        return Response({"file":filepath}, status=status.HTTP_201_CREATED)
+        user = User.objects.get(id=request.user.id)
+        section = SectionYear.objects.select_related('subject').get(id=self.kwargs['id'])
+ 
+        filepath = make_plan_table(serializer.data, user.username, section.subject.sub_name, section.section)
+
+        url = "127.0.0.1:8000" + filepath
+
+        return Response({"file":url}, status=status.HTTP_201_CREATED)
 
 
 
