@@ -52,14 +52,25 @@ const PlanTable = (props) => {
         console.error(err);
       }
     }
-    
+    const handleDownload = async()=>{
+      try{
+        const res = await axiosPrivate.get(API_EP.GETPDF + `${props.id}/`)
+        console.log(res.data.file);
+        window.open(res.data.file, "_blank");
+      }
+      catch(err){
+        console.error(err);
+      }
+      
+      
+    }
   return (
     plan ? (
         plan.map((item)=>(
           item.plantopic_set.length ? (
             
             <div class="px-32 pt-8">
-              <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm mb-1 right-0" onClick={(e)=>handleDelete(e,item.id)}>
+              <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm mb-1 right-0" onClick={handleDownload}>
                 Download Plan
                </button>
             <div class="grid px-10 py-2 border-2 border-slate-500 rounded text-xl">
