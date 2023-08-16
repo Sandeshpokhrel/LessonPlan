@@ -57,13 +57,17 @@ const PlanTable = (props) => {
     plan ? (
         plan.map((item)=>(
           item.plantopic_set.length ? (
+            
             <div class="px-32 pt-8">
+              <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm mb-1 right-0" onClick={(e)=>handleDelete(e,item.id)}>
+                Download Plan
+               </button>
             <div class="grid px-10 py-2 border-2 border-slate-500 rounded text-xl">
             <div>
           <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm" onClick={(e)=>handleDelete(e,item.id)}>
             Delete entry 
         </button>
-            <div class="grid justify-center mt-6">
+            <div class="grid justify-center my-6">
             <table class="table-fixed border-collapse border border-slate-400">
               <tr class="border border-slate-500 px-10">
                 <th class="bg-slate-400" colspan="3">Plan : <span>{item.plan_name}</span></th>
