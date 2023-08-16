@@ -182,7 +182,7 @@ class PlanPdfView(APIView):
  
         filepath = make_plan_table(serializer.data, user.username, section.subject.sub_name, section.section)
 
-        url = "127.0.0.1:8000" + filepath
+        url = "http://127.0.0.1:8000" + filepath
 
         return Response({"file":url}, status=status.HTTP_201_CREATED)
 
