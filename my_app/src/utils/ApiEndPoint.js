@@ -11,7 +11,8 @@ class API_EP{
     static CHAPTER = '/chapter/';
     static PLAN = '/plan/';
     static ASSIGN = '/assignment/';
-    static RES = '/resource/'
+    static RES = '/resource/';
+    static GETPDF = '/plan/getpdf/';
 
 }
 export default API_EP;
