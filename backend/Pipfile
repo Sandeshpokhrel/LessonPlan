@@ -5,15 +5,14 @@ name = "pypi"
 
 [packages]
 django = "*"
-mysqlclient = "*"
-djangorestframework = "*"
-"djangorestframework.simplejwt" = "*"
 django-cors-headers = "*"
+djangorestframework = "*"
+djangorestframework-simplejwt = "*"
+gunicorn = "*"
 reportlab = "*"
 whitenoise = "*"
-gunicorn = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.11"
+python_version = "3.10"
