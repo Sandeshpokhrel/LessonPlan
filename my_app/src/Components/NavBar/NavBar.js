@@ -12,6 +12,10 @@ function NavBar(props) {
     padding: '6px',
     borderRadius: '1rem'
   };
+  const logout = {
+    color: 'red',
+    cursor: 'pointer',
+  }
   const section = props.section;
   const id = props.id;
   return (
@@ -27,7 +31,7 @@ function NavBar(props) {
               <Nav.Link as={Link} to="/assignments" state = {{section,id}}>Assignments</Nav.Link> 
               <Nav.Link as={Link} to="/resources" state = {{section,id}}>Resources</Nav.Link> 
               <Nav.Link as={Link} to="/plan" state = {{section,id}}>Plan</Nav.Link> 
-        
+               
 
               <span style ={spanStyle}>
               {section}
@@ -36,6 +40,8 @@ function NavBar(props) {
             
             
           )}
+          <Nav.Link as={Link} to="/" state = {{section,id}} style={logout}>Logout</Nav.Link>
+
         </Container>
       </Navbar>
     </>
