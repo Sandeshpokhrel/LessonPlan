@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+from decouple import config
 from pathlib import Path
 from datetime import timedelta
 
@@ -21,17 +22,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-0q5(!y48y5znve2tyt7*-qj^ux#zk3)3cw)$g_20zs(%r)9)qz'
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+config_path = os.path.join(BASE_DIR, '.env')
 
+# print(f"SECRET_KEY from .env: {config('SECRET_KEY')}")
+# print(f"DEBUG from .env: {config('DEBUG', default=False, cast=bool)}")
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = os.getenv('DEBUG')
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOST = ['*']
 
@@ -98,9 +96,10 @@ WSGI_APPLICATION = 'LessonPlan.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 
 
 
