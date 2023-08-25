@@ -25,7 +25,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /LessonPlan/backend/
 
 # Expose the port that the Django development server will run on
-EXPOSE 8000
+# EXPOSE 8000
 
 # Start the Django development server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+ENTRYPOINT [ "sh" , "./entrypoint.sh" ]
+
+
