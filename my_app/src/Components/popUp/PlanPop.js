@@ -375,11 +375,11 @@ const handleClose = () =>{
                         
                       }}
                     >
-                       {index ? (
+                       {index && plan[index] ? (
     <>
                        <option>----</option>
                         {plan[index].resource_set.map((item, rIndex) => (
-                            <option key={rIndex} value={rIndex}>{item.resource_name}</option>
+                            <option key={rIndex} value={rIndex}>{item.res_name}</option>
                         ))}
                     </>
                 ) : <>
@@ -387,7 +387,7 @@ const handleClose = () =>{
                   <>
                       
                         {plan[index].resource_set.map((item, innerIndex) => (
-                            <option key={innerIndex} value={item.rescource_name}>{item.resource_name}</option>
+                            <option key={innerIndex} value={item.rescource_name}>{item.res_name}</option>
                         ))}
                     </>
                 }
