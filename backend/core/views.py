@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.urls import reverse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -6,6 +7,7 @@ from rest_framework.generics import ListCreateAPIView, CreateAPIView, DestroyAPI
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from django.conf import settings
 from .renderers import UserRenderer
 from .models import User, Subject, SectionYear, Chapter, Topic, Assignment, Resource, Plan, PlanAssignment, PlanResource, PlanTopic
 from .serializers import ChapterCreateSerializer, UserRegisterationSerializer, UserLoginSerializer, UserProfileSerializer, SubjectViewSerializer, SubjectCreateSerializer, SectionCreateSerializer, ChapterViewSerializer, TopicCreateSerializer, AssignmentSerializer, ResourceSerializer, PlanCreateSerializer, TopicAddPlanSerializer, AssignmentAddPlanSerializer, ResourceAddPlanSerializer, PlanViewSerializer, AssignmentListSerializer, ResourceListSerializer 
@@ -182,7 +184,8 @@ class PlanPdfView(APIView):
  
         filepath = make_plan_table(serializer.data, user.username, section.subject.sub_name, section.section)
 
-        url = "http://127.0.0.1:8000" + filepath
+        url = request.build_absolute_uri('/') + filepath
+
 
         return Response({"file":url}, status=status.HTTP_201_CREATED)
 
