@@ -4,7 +4,7 @@ import API_EP from '../../../utils/ApiEndPoint';
 import { useEffect, useState } from 'react';
 const PlanTable = (props) => {
     const axiosPrivate = useAxiosPrivate();
-    const [plan, setPlan] = useState();
+    const [plan, setPlan] = useState([]);
     useEffect(()=>{
         let isMounted = true;
         const controller = new AbortController();
@@ -27,6 +27,7 @@ const PlanTable = (props) => {
     useEffect(()=>{
         let isMounted = true;
         const controller = new AbortController();
+        props.setBool(false);
         const getPlan = async () =>{
             try{    
                 const res = await axiosPrivate.get(`${API_EP.SECTIONS}${props.id}/plan/`,{ signal: controller.signal});
@@ -65,14 +66,20 @@ const PlanTable = (props) => {
       
     }
   return (
-    plan ? (
+    plan.length ? (
+      <>
+      
+       <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm mb-1 right-0" onClick={handleDownload}>
+      Download Plan
+      </button>
+      <br/>
+      
+      
+        {
         plan.map((item)=>(
-          item.plantopic_set.length ? (
             
             <div class="px-32 pt-8">
-              <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm mb-1 right-0" onClick={handleDownload}>
-                Download Plan
-               </button>
+              
             <div class="grid px-10 py-2 border-2 border-slate-500 rounded text-xl">
             <div>
           <button class="border-2 border-blue-400 bg-blue-400 rounded p-1 text-sm" onClick={(e)=>handleDelete(e,item.id)}>
@@ -127,11 +134,12 @@ const PlanTable = (props) => {
           </div>
           </div>
           </div>
-          ) : ""
+        
+          
               
-      )) 
+      )) }
       
-    ) : ""
+    </>) : ""
   
   )
 }

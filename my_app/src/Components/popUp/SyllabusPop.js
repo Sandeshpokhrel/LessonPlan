@@ -146,9 +146,7 @@ function SyllabusPop(props) {
   const handleClose = () =>{
     
     setHidec(false);
-    props.setBool(false);
     props.setBool(true);
-    
     setShow(false);
   }
 

@@ -27,6 +27,7 @@ const SyllabusTile = (props) => {
     useEffect(()=>{
         let isMounted = true;
         const controller = new AbortController();
+        props.setBool(false);
         const getSyllabus = async () =>{
             try{    
                 const res = await axiosPrivate.get(`${API_EP.SECTIONS}${props.id}/chapters/`,{ signal: controller.signal});

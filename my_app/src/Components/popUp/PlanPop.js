@@ -142,7 +142,6 @@ const handleResource = async() =>{
 }
 const handleClose = () =>{
   setShow(false);
-  props.setBool(false);
   props.setBool(true);
 
 }
