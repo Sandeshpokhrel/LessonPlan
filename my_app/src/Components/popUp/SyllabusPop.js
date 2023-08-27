@@ -117,7 +117,7 @@ function SyllabusPop(props) {
         },
       });
       console.log(res);
-      setErrMsg("successfully Added");
+      setErrMsg("successfully Added Assigment");
       setAssign();
     } catch (err) {
       setErrMsg("Cannot Add File. First Add Chapter");
@@ -136,7 +136,7 @@ function SyllabusPop(props) {
         },
       });
       console.log(res);
-      setErrMsg("successfully Added");
+      setErrMsg("successfully Added Resource");
       setResource();
     } catch (err) {
       setErrMsg("Cannot Add File. First Add Chapter");

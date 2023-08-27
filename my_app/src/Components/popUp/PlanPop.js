@@ -21,6 +21,9 @@ const PlanPop = (props) => {
     const [aIndex, setAIndex] = useState(0);
     const [rIndex, setRIndex] = useState(0);
     const [errMsg, setErrMsg] = useState();
+    useEffect(() => {
+      setErrMsg("");
+    }, []);
     useEffect(()=>{
       let isMounted = true;
       const controller = new AbortController();
@@ -77,6 +80,7 @@ const handleCT = async() =>{
         },
       });
       console.log(res.data);
+      setErrMsg("Successfully Added Chapter's Topic")
       
     } catch (err) {
       setErrMsg("Add the field serially from left to right.");
@@ -97,6 +101,7 @@ const handleWeek = async()=>{
       );
       console.log(res.data);
       setPid(res.data.id);
+      setErrMsg("Successfully Added Week")
       setWeek("");
     } catch (err) {
       setErrMsg("Add the field serially from left to right.");
@@ -116,6 +121,7 @@ const handleAssign = async() =>{
         },
       });
       console.log(res);
+      setErrMsg("Successfully Added Assignment plan.");
       
     } catch (err) {
       setErrMsg("Add the field serially from left to right.");
@@ -135,7 +141,7 @@ const handleResource = async() =>{
         },
       });
       console.log(res);
-      
+      setErrMsg("Successfully Added Resources plan.");
     } catch (err) {
       setErrMsg("Add the field serially from left to right.");
     }
